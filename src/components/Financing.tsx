@@ -36,7 +36,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
             </h1>
             <button 
               onClick={() => onNavigate?.('quiz')}
-              className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-md hover:bg-[rgb(120,_110,_230)] text-base transition-colors"
+              className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-[99px] hover:bg-[rgb(120,_110,_230)] text-base transition-colors"
             >
               Check Eligibility
             </button>
@@ -45,50 +45,50 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
 
         {/* Benefits Section */}
         <section className="py-16 bg-[rgb(250,_250,_253)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
               
               {/* Benefit 1 */}
               <div className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex justify-center mb-6">
+                  <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                 </div>
-                <h3 className="font-semibold text-[rgb(5,_15,_35)] text-lg mb-2">Fast Approval</h3>
-                <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-sm">
+                <h3 className="font-semibold text-[rgb(5,_15,_35)] text-2xl mb-3">Fast Approval</h3>
+                <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-base leading-relaxed">
                   Quick confirmation of your application for financing
                 </p>
               </div>
 
               {/* Benefit 2 */}
               <div className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex justify-center mb-6">
+                  <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                 </div>
-                <h3 className="font-semibold text-[rgb(5,_15,_35)] text-lg mb-2">Completely online</h3>
-                <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-sm">
+                <h3 className="font-semibold text-[rgb(5,_15,_35)] text-2xl mb-3">Completely online</h3>
+                <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-base leading-relaxed">
                   The entire financing procedure is done fully online
                 </p>
               </div>
 
               {/* Benefit 3 */}
               <div className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex justify-center mb-6">
+                  <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                 </div>
-                <h3 className="font-semibold text-[rgb(5,_15,_35)] text-lg mb-2">No impact to CS</h3>
-                <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-sm">
+                <h3 className="font-semibold text-[rgb(5,_15,_35)] text-2xl mb-3">No impact to CS</h3>
+                <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-base leading-relaxed">
                   The application will not affect your Credit Score in any way
                 </p>
               </div>
@@ -99,7 +99,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
 
         {/* Financing Info & Form Section */}
         <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
               
               {/* Left Column - Financing Info */}
@@ -238,7 +238,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
 
         {/* Testimonials Section */}
         <section className="py-16 bg-[rgb(250,_250,_253)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 xl:px-[164px]">
             <h2 className="text-center font-semibold text-[rgb(5,_15,_35)] text-3xl md:text-4xl mb-12">
               What people says
             </h2>
@@ -314,8 +314,8 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+        <section className="py-16 bg-white mx-[164px] my-[0px]">
+          <div className="w-full max-w-[1920px] m-[0px] md:px-8 lg:px-20 2xl:px-32 p-[0px]">
             <div className="relative w-full rounded-2xl bg-cover bg-center overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBmaW5hbmNpbmclMjBoYW5kc2hha2V8ZW58MXx8fHwxNzY4MDc1MzMxfDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
               <div className="py-16 px-4 text-center">
                 <h2 className="text-white text-3xl md:text-4xl lg:text-[48px] font-semibold mb-8 leading-tight">
@@ -350,7 +350,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
                   </div>
                 </div>
 
-                <button className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-md hover:bg-[rgb(120,_110,_230)] text-base transition-colors">
+                <button className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-[99px] hover:bg-[rgb(120,_110,_230)] text-base transition-colors">
                   Check Eligibility
                 </button>
               </div>

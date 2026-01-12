@@ -19,64 +19,73 @@ export function AboutUs() {
 
         {/* What we provide Section */}
         <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
-            <div className="max-w-6xl mx-auto">
-              <p className="text-[rgb(139,_130,_246)] text-xs uppercase tracking-[1.5px] mb-3">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+            <div className="max-w-5xl mx-auto">
+              <p className="text-[rgb(139,_130,_246)] text-sm uppercase tracking-[1.5px] mb-4">
                 OUR SERVICES
               </p>
-              <h2 className="font-semibold text-[rgb(5,_15,_35)] text-3xl md:text-4xl mb-12">
+              <h2 className="font-semibold text-[rgb(5,_15,_35)] text-4xl md:text-5xl mb-16">
                 What we provide
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 {/* Trade In */}
-                <div className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
-                  <div className="w-12 h-12 bg-[rgba(139,_130,_246,_0.1)] rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[rgb(139,_130,_246)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white border border-gray-200 rounded-lg p-10 hover:shadow-lg transition-shadow">
+                  <div className="w-16 h-16 bg-[rgba(139,_130,_246,_0.1)] rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-[rgb(139,_130,_246)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-[rgb(5,_15,_35)] text-xl mb-3">Trade In</h3>
-                  <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-sm mb-4 leading-relaxed">
+                  <h3 className="font-semibold text-[rgb(5,_15,_35)] text-2xl mb-4">Trade In</h3>
+                  <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-base mb-6 leading-relaxed">
                     Selling your car just got much easier
                   </p>
-                  <a href="#" className="text-[rgb(139,_130,_246)] text-sm font-medium hover:opacity-80 transition-opacity">
-                    Get Started &gt;
-                  </a>
+                  <button className="flex items-center gap-2 text-[rgb(139,_130,_246)] text-base font-medium hover:gap-3 transition-all group">
+                    Get Started
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </div>
 
                 {/* Financing Services */}
-                <div className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
-                  <div className="w-12 h-12 bg-[rgba(139,_130,_246,_0.1)] rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[rgb(139,_130,_246)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white border border-gray-200 rounded-lg p-10 hover:shadow-lg transition-shadow">
+                  <div className="w-16 h-16 bg-[rgba(139,_130,_246,_0.1)] rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-[rgb(139,_130,_246)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-[rgb(5,_15,_35)] text-xl mb-3">Financing Services</h3>
-                  <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-sm mb-4 leading-relaxed">
+                  <h3 className="font-semibold text-[rgb(5,_15,_35)] text-2xl mb-4">Financing Services</h3>
+                  <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-base mb-6 leading-relaxed">
                     We provide financing services for the purchase of car loans
                   </p>
-                  <a href="#" className="text-[rgb(139,_130,_246)] text-sm font-medium hover:opacity-80 transition-opacity">
-                    Learn More &gt;
-                  </a>
+                  <button className="flex items-center gap-2 text-[rgb(139,_130,_246)] text-base font-medium hover:gap-3 transition-all group">
+                    Learn More
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </div>
 
                 {/* Technical Service */}
-                <div className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
-                  <div className="w-12 h-12 bg-[rgba(139,_130,_246,_0.1)] rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-[rgb(139,_130,_246)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white border border-gray-200 rounded-lg p-10 hover:shadow-lg transition-shadow">
+                  <div className="w-16 h-16 bg-[rgba(139,_130,_246,_0.1)] rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-[rgb(139,_130,_246)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-[rgb(5,_15,_35)] text-xl mb-3">Technical Service</h3>
-                  <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-sm mb-4 leading-relaxed">
+                  <h3 className="font-semibold text-[rgb(5,_15,_35)] text-2xl mb-4">Technical Service</h3>
+                  <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-base mb-6 leading-relaxed">
                     You get your 100% service of technical experts at reasonable price
                   </p>
-                  <a href="#" className="text-[rgb(139,_130,_246)] text-sm font-medium hover:opacity-80 transition-opacity">
-                    Get in Touch &gt;
-                  </a>
+                  <button className="flex items-center gap-2 text-[rgb(139,_130,_246)] text-base font-medium hover:gap-3 transition-all group">
+                    Get in Touch
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </div>
 
               </div>
@@ -86,7 +95,7 @@ export function AboutUs() {
 
         {/* Buy Metro Pre-Owned Section */}
         <section className="py-16 bg-[rgb(250,_250,_253)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
@@ -116,7 +125,7 @@ export function AboutUs() {
 
         {/* Features with Image Section */}
         <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
@@ -186,7 +195,7 @@ export function AboutUs() {
 
         {/* Statistics Section */}
         <section className="py-16 bg-[rgb(250,_250,_253)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 
@@ -221,7 +230,7 @@ export function AboutUs() {
 
         {/* CTA Section */}
         <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="relative w-full rounded-2xl bg-cover bg-center overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGhhbmRzaGFrZSUyMGNhciUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MTU5OTA3fDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
               <div className="py-16 md:py-20 px-4 text-center">
                 <h2 className="text-white text-3xl md:text-4xl lg:text-[48px] font-semibold mb-8 leading-tight">

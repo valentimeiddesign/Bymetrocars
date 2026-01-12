@@ -11,6 +11,24 @@ import { Quiz } from './components/Quiz';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminPanel } from './components/AdminPanel';
 import { CarDetails } from './components/CarDetails';
+import { Icons, CarImages, BrandLogos } from './components/Icons';
+import { Footer } from './components/Footer';
+
+// Import Figma images for Browse by Type and Popular Brands
+import imgFordSedan from "figma:asset/62436b94333b992271b2bd63a2d69bb6c9ee5f70.png";
+import imgSUV from "figma:asset/71af0fa3a4b700260f35013dcb6a6592ecc75611.png";
+import imgHatchback from "figma:asset/e94f7dcc213925d5d4aebb0e17925a4a70e66139.png";
+import imgTruck from "figma:asset/cd2eb872b42b5e9801120c8e75a8370637bdc5b0.png";
+import imgCoupe from "figma:asset/42cab77d70c9ce4384e58dbdbc3596e2fd093453.png";
+import imgVAN from "figma:asset/4b62f68fb822a2364522d1cdabaf969ad53d4d90.png";
+import imgNissanLogo from "figma:asset/2ea45d7e04c9c673edc6dca4e39cb88fd82bef8f.png";
+import imgDodgeLogo from "figma:asset/72765622bb165dfdbac3b1184674281e3ad57a98.png";
+import imgJeepLogo from "figma:asset/93599331c27c183974e07c7b8711dc786092acc1.png";
+import imgChryslerLogo from "figma:asset/615185059266e399b9e8b101050e467826d5e9b7.png";
+import imgFordLogo from "figma:asset/90198f2ec314dfc464a44c45b103bcceb339008d.png";
+import imgToyotaLogo from "figma:asset/e97faa84609add6cb2cb6f6024ba108cd41ff545.png";
+import imgShopCard from "figma:asset/c35b4985a04d0c772f8fe5914c7570e0e7ac90f1.png";
+import imgSellCard from "figma:asset/f0b3eb2b4458846bec56be8635bb677de4cdf411.png";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -68,7 +86,7 @@ export default function App() {
           
           {/* Header / Navigation */}
           <header role="banner" className="sticky top-0 w-full h-[70px] bg-white border-b border-[rgba(30,30,30,0.08)] shadow-[rgba(5,15,35,0.05)_0px_6px_25px_0px] z-[998]">
-            <div className="flex items-center justify-between h-full px-4 md:px-8 lg:px-20">
+            <div className="flex items-center justify-between h-full md:px-8 lg:px-20 px-[192px] py-[0px]">
               
               {/* Logo */}
               <button onClick={() => navigateTo('home')} className="flex items-center">
@@ -149,89 +167,7 @@ export default function App() {
 
           <CarDetails carId={currentCarId} onNavigate={navigateTo} />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              
-              {/* Footer Content Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                
-                {/* Company Info */}
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Browse Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                {/* Company Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Locations
-                    </button>
-                    <button onClick={() => navigateTo('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      About us
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <button onClick={() => navigateTo('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Vacancies
-                    </button>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Bottom */}
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -331,89 +267,7 @@ export default function App() {
 
           <ShopCars onNavigate={navigateTo} />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              
-              {/* Footer Content Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                
-                {/* Company Info */}
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Browse Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                {/* Company Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Locations
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      About us
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Vacancies
-                    </a>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Bottom */}
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -508,89 +362,7 @@ export default function App() {
 
           <SellTrade />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              
-              {/* Footer Content Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                
-                {/* Company Info */}
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Browse Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                {/* Company Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Locations
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      About us
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Vacancies
-                    </a>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Bottom */}
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -685,89 +457,7 @@ export default function App() {
 
           <Financing onNavigate={navigateTo} />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              
-              {/* Footer Content Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                
-                {/* Company Info */}
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Browse Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                {/* Company Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Locations
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      About us
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Vacancies
-                    </a>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Bottom */}
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -865,81 +555,7 @@ export default function App() {
 
           <AboutUs />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Locations
-                    </button>
-                    <button onClick={() => navigateTo('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      About us
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <button onClick={() => navigateTo('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Vacancies
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -1037,81 +653,7 @@ export default function App() {
 
           <Contacts />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Locations
-                    </button>
-                    <button onClick={() => navigateTo('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      About us
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <button onClick={() => navigateTo('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Vacancies
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -1209,81 +751,7 @@ export default function App() {
 
           <Locations />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Locations
-                    </button>
-                    <button onClick={() => navigateTo('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      About us
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <button onClick={() => navigateTo('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Vacancies
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -1381,81 +849,7 @@ export default function App() {
 
           <Vacancies />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Locations
-                    </button>
-                    <button onClick={() => navigateTo('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      About us
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <button onClick={() => navigateTo('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Vacancies
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -1550,89 +944,7 @@ export default function App() {
 
           <Quiz />
 
-          {/* Footer */}
-          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-            <div className="w-full px-4 md:px-8 lg:px-20">
-              
-              {/* Footer Content Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-                
-                {/* Company Info */}
-                <div className="flex flex-col gap-5">
-                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                  </p>
-                  <div className="flex gap-4">
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                    </a>
-                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Browse Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                  <div className="flex flex-col gap-4">
-                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                      Buy a vehicle
-                    </button>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Return Policy
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Trade-Ins
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Loan Calculator
-                    </a>
-                  </div>
-                </div>
-
-                {/* Company Links */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Locations
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      About us
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Service
-                    </a>
-                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      Vacancies
-                    </a>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="flex flex-col gap-5">
-                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                  <div className="flex flex-col gap-4">
-                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 252 4422
-                    </a>
-                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                      (902) 466 0086
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Bottom */}
-              <div className="border-t border-white/10 pt-8 text-center">
-                <p className="text-white text-sm opacity-[0.55]">
-                  © 2025 Buy Metro Pre-Owned. All rights reserved.
-                </p>
-              </div>
-            </div>
-          </footer>
+          <Footer onNavigate={navigateTo} />
         </div>
       </div>
     );
@@ -1730,7 +1042,7 @@ export default function App() {
 
         {/* Hero Section */}
         <section className="py-10 md:py-[60px]" style={{"backgroundImage":"linear-gradient(rgb(250, 250, 253), rgba(250, 250, 253, 0))"}}>
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             
             {/* Hero Title */}
             <h1 className="font-semibold text-[rgb(5,_15,_35)] text-3xl md:text-5xl lg:text-[60px] tracking-[-1.3px] leading-tight mb-8 md:mb-10">
@@ -2586,10 +1898,10 @@ export default function App() {
                     </div>
                     <div className="flex items-center gap-[6px] mt-4">
                       <div className="font-semibold text-white text-lg md:text-[18px]">Browse Vehicles</div>
-                      <img alt="Arrow" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fc57b1155479db3653749654cf951ecb5cc28a2bb.svg?generation=1768065159966652&alt=media" className="w-4" />
+                      <Icons.ArrowRightWhite />
                     </div>
                   </div>
-                  <div className="bg-right bg-no-repeat bg-contain w-[40%] md:w-[50%]" style={{"backgroundImage":"url(\"https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F7c95e2a09225f1ef8ec1f736e3da23de74aa4269.png?generation=1768065160092373&alt=media\")"}}></div>
+                  <div className="bg-right bg-no-repeat bg-contain w-[40%] md:w-[50%]" style={{"backgroundImage":`url(${imgShopCard})`}}></div>
                 </div>
               </div>
 
@@ -2609,10 +1921,10 @@ export default function App() {
                     </div>
                     <div className="flex items-center gap-[6px] mt-4">
                       <div className="font-semibold text-[rgb(139,_130,_246)] text-lg md:text-[18px]">Get started</div>
-                      <img alt="Arrow" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F4c0c461d9029afe7890260e0f195ba7456d3d443.svg?generation=1768065160114159&alt=media" className="w-4" />
+                      <Icons.ArrowRight className="w-4 text-[rgb(139,_130,_246)]" />
                     </div>
                   </div>
-                  <div className="bg-right bg-no-repeat bg-contain w-[40%] md:w-[50%]" style={{"backgroundImage":"url(\"https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fbc0d090c673c56be6b590b21e8b50278b5c8e770.png?generation=1768065160162107&alt=media\")"}}></div>
+                  <div className="bg-right bg-no-repeat bg-contain w-[40%] md:w-[50%]" style={{"backgroundImage":`url(${imgSellCard})`}}></div>
                 </div>
               </div>
             </div>
@@ -2644,7 +1956,7 @@ export default function App() {
 
         {/* Browse by Type Section */}
         <section className="bg-[rgb(248,_248,_252)] py-12 md:py-20">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             
             {/* Section Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 md:mb-10 gap-4">
@@ -2653,19 +1965,19 @@ export default function App() {
               </h2>
               <button onClick={() => navigateTo('shop')} className="flex items-center text-[rgb(139,_130,_246)] gap-[6px] hover:gap-[10px] transition-all">
                 <span className="font-semibold text-lg md:text-[18px]">Explore all types</span>
-                <img alt="Arrow" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F4c0c461d9029afe7890260e0f195ba7456d3d443.svg?generation=1768065160114159&alt=media" className="w-[10px]" />
+                <Icons.ArrowRight className="w-[10px]" />
               </button>
             </div>
 
             {/* Vehicle Types Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-5">
               {[
-                { name: 'Sedan', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F2e0dd852af827aae3046492c5a6ec80a4baf3431.png?generation=1768065160148088&alt=media' },
-                { name: 'SUV', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F3409c215f601866f9c0de540d809fbfd75ef7c14.png?generation=1768065160176871&alt=media' },
-                { name: 'Hatchback', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fd7da3ed1003ba48e43d7e3026a20b93517837b41.png?generation=1768065160204295&alt=media' },
-                { name: 'Truck', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F4911d6ee1620f69e8a2f5c17e64a4906a41f6518.png?generation=1768065160257735&alt=media' },
-                { name: 'VAN', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F895be9079cf146938f1bb84b08393f2011891622.png?generation=1768065160232148&alt=media' },
-                { name: 'Coupe', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F5dfda566e9f44a8dc35dfdadc4ceec47b8258047.png?generation=1768065160260108&alt=media' }
+                { name: 'Sedan', image: imgFordSedan },
+                { name: 'SUV', image: imgSUV },
+                { name: 'Hatchback', image: imgHatchback },
+                { name: 'Truck', image: imgTruck },
+                { name: 'VAN', image: imgVAN },
+                { name: 'Coupe', image: imgCoupe }
               ].map((type) => (
                 <div 
                   key={type.name}
@@ -2673,7 +1985,7 @@ export default function App() {
                   className="block hover:scale-105 transition-transform cursor-pointer"
                 >
                   <div className="flex flex-col items-center bg-white gap-2 p-4 rounded-[0.9375rem] shadow-sm hover:shadow-md">
-                    <img alt={type.name} src={type.image} className="w-16 md:w-20" />
+                    <img alt={type.name} src={type.image} className="w-full h-32 md:h-40 object-cover rounded-lg" />
                     <p className="text-[rgb(5,_15,_35)] text-sm md:text-base">{type.name}</p>
                   </div>
                 </div>
@@ -2684,7 +1996,7 @@ export default function App() {
 
         {/* Popular Brands Section */}
         <section className="bg-[rgb(248,_248,_252)] py-12 md:py-20">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             
             {/* Section Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 md:mb-10 gap-4">
@@ -2693,19 +2005,19 @@ export default function App() {
               </h2>
               <button onClick={() => navigateTo('shop')} className="flex items-center text-[rgb(139,_130,_246)] gap-[6px] hover:gap-[10px] transition-all">
                 <span className="font-semibold text-lg md:text-[18px]">Explore all brands</span>
-                <img alt="Arrow" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F4c0c461d9029afe7890260e0f195ba7456d3d443.svg?generation=1768065160114159&alt=media" className="w-[10px]" />
+                <Icons.ArrowRight className="w-[10px]" />
               </button>
             </div>
 
             {/* Brands Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-5">
               {[
-                { name: 'Toyota', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F3a4bda44c1d4c9e4cd1a76c3c5e7da77a4c82eba.svg?generation=1768065160299612&alt=media' },
-                { name: 'Honda', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Ff6e76a3a3c8d7e30f1bd8f5ff1c0b9ead7eef7d7.svg?generation=1768065160328931&alt=media' },
-                { name: 'Ford', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fa59e1a39f734797c0b8c2dd9f50e52cd9f7e1d1d.svg?generation=1768065160302634&alt=media' },
-                { name: 'Nissan', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F0f4a98b7fbe3c7b7e8755d8f24c9c4e5f5c6e3d3.svg?generation=1768065160323913&alt=media' },
-                { name: 'Hyundai', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fb3c5ec8adce4f6a9c0aef71e4cae48f4cf3f5a5a.svg?generation=1768065160355932&alt=media' },
-                { name: 'Chevrolet', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fdde1c69a65f48e79c3e5a8f7e4f1b5c4f7a8d8d8.svg?generation=1768065160373829&alt=media' }
+                { name: 'Jeep', image: imgJeepLogo },
+                { name: 'Chrysler', image: imgChryslerLogo },
+                { name: 'Ford', image: imgFordLogo },
+                { name: 'Toyota', image: imgToyotaLogo },
+                { name: 'Dodge', image: imgDodgeLogo },
+                { name: 'Nissan', image: imgNissanLogo }
               ].map((brand) => (
                 <div 
                   key={brand.name}
@@ -2713,7 +2025,7 @@ export default function App() {
                   className="block hover:scale-105 transition-transform cursor-pointer"
                 >
                   <div className="flex flex-col items-center justify-center bg-white gap-2 p-6 rounded-[0.9375rem] shadow-sm hover:shadow-md min-h-[100px]">
-                    <img alt={brand.name} src={brand.logo} className="w-16 md:w-20 h-auto" />
+                    <img alt={brand.name} src={brand.image} className="w-20 md:w-24 h-auto object-contain" />
                   </div>
                 </div>
               ))}
@@ -2721,95 +2033,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-          <div className="w-full px-4 md:px-8 lg:px-20">
-            
-            {/* Footer Content Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-              
-              {/* Company Info */}
-              <div className="flex flex-col gap-5">
-                <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-                <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                  Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-                </p>
-                <div className="flex gap-4">
-                  <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                    <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
-                  </a>
-                  <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                    <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Browse Links */}
-              <div className="flex flex-col gap-5">
-                <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-                <div className="flex flex-col gap-4">
-                  <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                    Buy a vehicle
-                  </button>
-                  <a href="https://www.buymetropreowned.ca/return-policy" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    Return Policy
-                  </a>
-                  <a href="https://www.buymetropreowned.ca/sell" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    Trade-Ins
-                  </a>
-                  <a href="https://www.buymetropreowned.ca/car-loan-calculator" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    Loan Calculator
-                  </a>
-                </div>
-              </div>
-
-              {/* Company Links */}
-              <div className="flex flex-col gap-5">
-                <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-                <div className="flex flex-col gap-4">
-                  <a href="https://www.buymetropreowned.ca/locations" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    Locations
-                  </a>
-                  <a href="https://www.buymetropreowned.ca/about" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    About us
-                  </a>
-                  <a href="https://www.buymetropreowned.ca/service" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    Service
-                  </a>
-                  <a href="https://www.buymetropreowned.ca/contacts" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    Vacancies
-                  </a>
-                </div>
-              </div>
-
-              {/* Contact Info */}
-              <div className="flex flex-col gap-5">
-                <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-                <div className="flex flex-col gap-4">
-                  <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    (902) 252 4422
-                  </a>
-                  <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                    (902) 466 0086
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer Bottom */}
-            <div className="border-t border-white/10 pt-8 text-center">
-              <p className="text-white text-sm opacity-[0.55]">
-                © 2025 Buy Metro Pre-Owned. All rights reserved.
-              </p>
-              <button 
-                onClick={() => navigateTo('admin')}
-                className="text-white text-xs opacity-30 hover:opacity-60 transition-opacity mt-2"
-              >
-                Admin
-              </button>
-            </div>
-          </div>
-        </footer>
+        <Footer onNavigate={navigateTo} />
 
       </div>
     </div>

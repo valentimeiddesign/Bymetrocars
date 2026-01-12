@@ -52,7 +52,7 @@ export function Locations() {
         
         {/* Locations Section */}
         <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <p className="text-[rgb(139,_130,_246)] text-xs uppercase tracking-[1.5px] mb-3">
                 VISIT US

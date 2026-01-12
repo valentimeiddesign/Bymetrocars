@@ -201,7 +201,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
         
         {/* Canadian Black Book Banner */}
         <section className="bg-[rgb(5,_14,_35)] py-6">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
               <img alt="cbb-logo" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fefed42f33e169c093b471be984d4440ceafa20dc.svg?generation=1768065160121232&alt=media" className="w-[90px] h-auto" />
               <div className="text-center md:text-left">
@@ -221,7 +221,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
 
         {/* Equifax Banner */}
         <section className="bg-[rgb(139,_130,_246)] py-4">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
               <img alt="Equifax" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fb59c186f2cad3e26ce3aa602f80cd1e80973b93d.png?generation=1768065160065915&alt=media" className="w-[100px] md:w-[120px] h-auto" />
               <div className="text-white font-bold text-base md:text-[18px] text-center md:text-left" style={{"fontFamily":"\"AVA Proxima Nova\""}}>
@@ -237,7 +237,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
 
         {/* Search and Filters Section */}
         <section className="py-8 bg-[rgb(250,_250,_253)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             
             {/* Search Bar */}
             <div className="flex items-center bg-white shadow-sm p-3 rounded-lg mb-4">
@@ -735,7 +735,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
 
         {/* Car Listings Grid */}
         <section className="py-8 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {carsToShow.map(car => (
                 <div

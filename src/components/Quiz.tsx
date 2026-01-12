@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import browseTypeImage from 'figma:asset/e237cf51f107e64d5b2543e688cc480de85e8196.png';
+import { Icons } from './Icons';
 import { TopBanner } from './TopBanner';
-
-type VehicleType = 'car' | 'truck' | 'suv' | 'van' | null;
-type BudgetRange = '$250-$374' | '$375-$499' | '$500-$750' | '$750+' | null;
-type MoneyDown = '$0' | '$500' | '$1000' | '$2000' | '$3000' | '$4000+' | null;
-type EmploymentStatus = 'employed' | 'self-employed' | 'retired' | 'long-term-disability' | 'other' | null;
+import imgFordSedan from "figma:asset/62436b94333b992271b2bd63a2d69bb6c9ee5f70.png";
+import imgTruck from "figma:asset/cd2eb872b42b5e9801120c8e75a8370637bdc5b0.png";
+import imgSUV from "figma:asset/71af0fa3a4b700260f35013dcb6a6592ecc75611.png";
+import imgVAN from "figma:asset/4b62f68fb822a2364522d1cdabaf969ad53d4d90.png";
 
 interface QuizProps {
-  onNavigate: (page: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
-export function Quiz({ onNavigate }: QuizProps) {
+export function Quiz({ onNavigate }: QuizProps = {}) {
   const [companyMenuOpen, setCompanyMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -187,64 +186,64 @@ export function Quiz({ onNavigate }: QuizProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <button
                   onClick={() => setVehicleType('car')}
-                  className={`p-6 border-2 rounded-lg flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'car' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <div className="w-full h-20 flex items-center justify-center text-5xl">
-                    🚗
+                  <div className="w-full h-20 flex items-center justify-center overflow-hidden">
+                    <img src={imgFordSedan} alt="Car" className="w-full h-full object-contain" />
                   </div>
-                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-md text-sm font-medium">
+                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-full text-sm font-medium">
                     I want a Car
                   </span>
                 </button>
 
                 <button
                   onClick={() => setVehicleType('truck')}
-                  className={`p-6 border-2 rounded-lg flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'truck' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <div className="w-full h-20 flex items-center justify-center text-5xl">
-                    🚙
+                  <div className="w-full h-20 flex items-center justify-center overflow-hidden">
+                    <img src={imgTruck} alt="Truck" className="w-full h-full object-contain" />
                   </div>
-                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-md text-sm font-medium">
+                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-full text-sm font-medium">
                     I want a Truck
                   </span>
                 </button>
 
                 <button
                   onClick={() => setVehicleType('suv')}
-                  className={`p-6 border-2 rounded-lg flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'suv' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <div className="w-full h-20 flex items-center justify-center text-5xl">
-                    🚐
+                  <div className="w-full h-20 flex items-center justify-center overflow-hidden">
+                    <img src={imgSUV} alt="SUV" className="w-full h-full object-contain" />
                   </div>
-                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-md text-sm font-medium">
+                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-full text-sm font-medium">
                     I want a SUV
                   </span>
                 </button>
 
                 <button
                   onClick={() => setVehicleType('van')}
-                  className={`p-6 border-2 rounded-lg flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'van' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <div className="w-full h-20 flex items-center justify-center text-5xl">
-                    🚌
+                  <div className="w-full h-20 flex items-center justify-center overflow-hidden">
+                    <img src={imgVAN} alt="Van" className="w-full h-full object-contain" />
                   </div>
-                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-md text-sm font-medium">
+                  <span className="bg-[rgb(69,106,236)] text-white px-4 py-2 rounded-full text-sm font-medium">
                     I want a Van
                   </span>
                 </button>
@@ -253,7 +252,7 @@ export function Quiz({ onNavigate }: QuizProps) {
               <button
                 onClick={handleNext}
                 disabled={!vehicleType}
-                className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
+                className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
               >
                 Next
               </button>
@@ -281,7 +280,7 @@ export function Quiz({ onNavigate }: QuizProps) {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setBudget('$250-$374')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     budget === '$250-$374' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -292,7 +291,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setBudget('$375-$499')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     budget === '$375-$499' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -303,7 +302,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setBudget('$500-$750')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     budget === '$500-$750' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -314,7 +313,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setBudget('$750+')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     budget === '$750+' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -331,14 +330,14 @@ export function Quiz({ onNavigate }: QuizProps) {
               <div className="flex gap-4">
                 <button
                   onClick={handleBack}
-                  className="w-full bg-gray-200 text-[rgb(5,15,35)] py-3 px-6 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                  className="w-full bg-gray-200 text-[rgb(5,15,35)] py-3 px-6 rounded-full font-medium hover:bg-gray-300 transition-colors"
                 >
                   Back
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={!budget}
-                  className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
+                  className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
                 >
                   Next
                 </button>
@@ -369,7 +368,7 @@ export function Quiz({ onNavigate }: QuizProps) {
                   <button
                     key={amount}
                     onClick={() => setMoneyDown(amount as MoneyDown)}
-                    className={`p-6 border-2 rounded-lg text-center transition-all ${
+                    className={`p-6 border-2 rounded-full text-center transition-all ${
                       moneyDown === amount 
                         ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                         : 'border-gray-200 hover:border-gray-300'
@@ -383,14 +382,14 @@ export function Quiz({ onNavigate }: QuizProps) {
               <div className="flex gap-4">
                 <button
                   onClick={handleBack}
-                  className="w-full bg-gray-200 text-[rgb(5,15,35)] py-3 px-6 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                  className="w-full bg-gray-200 text-[rgb(5,15,35)] py-3 px-6 rounded-full font-medium hover:bg-gray-300 transition-colors"
                 >
                   Back
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={!moneyDown}
-                  className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
+                  className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
                 >
                   Next
                 </button>
@@ -419,7 +418,7 @@ export function Quiz({ onNavigate }: QuizProps) {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setEmploymentStatus('employed')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     employmentStatus === 'employed' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -430,7 +429,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setEmploymentStatus('self-employed')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     employmentStatus === 'self-employed' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -441,7 +440,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setEmploymentStatus('retired')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     employmentStatus === 'retired' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -452,7 +451,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setEmploymentStatus('long-term-disability')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all ${
+                  className={`p-6 border-2 rounded-full text-center transition-all ${
                     employmentStatus === 'long-term-disability' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -463,7 +462,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
                 <button
                   onClick={() => setEmploymentStatus('other')}
-                  className={`p-6 border-2 rounded-lg text-center transition-all col-span-2 ${
+                  className={`p-6 border-2 rounded-full text-center transition-all col-span-2 ${
                     employmentStatus === 'other' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -480,14 +479,14 @@ export function Quiz({ onNavigate }: QuizProps) {
               <div className="flex gap-4">
                 <button
                   onClick={handleBack}
-                  className="w-full bg-gray-200 text-[rgb(5,15,35)] py-3 px-6 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                  className="w-full bg-gray-200 text-[rgb(5,15,35)] py-3 px-6 rounded-full font-medium hover:bg-gray-300 transition-colors"
                 >
                   Back
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={!employmentStatus}
-                  className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
+                  className="w-full bg-[rgb(69,106,236)] text-white py-3 px-6 rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[rgb(59,96,226)] transition-colors"
                 >
                   Next
                 </button>
@@ -907,7 +906,7 @@ export function Quiz({ onNavigate }: QuizProps) {
 
       {/* Footer */}
       <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-        <div className="w-full px-4 md:px-8 lg:px-20">
+        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           
           {/* Footer Content Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
@@ -919,11 +918,11 @@ export function Quiz({ onNavigate }: QuizProps) {
                 Your trusted pre-owned vehicle dealership offering quality cars at great prices.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                  <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
+                <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity text-white">
+                  <Icons.Facebook />
                 </a>
-                <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                  <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
+                <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity text-white">
+                  <Icons.Instagram />
                 </a>
               </div>
             </div>

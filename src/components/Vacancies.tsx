@@ -38,7 +38,7 @@ export function Vacancies() {
           
           {/* Job Detail Header */}
           <section className="py-12 md:py-16 bg-[rgb(250,_250,_253)]">
-            <div className="w-full px-4 md:px-8 lg:px-20">
+            <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
               <div className="max-w-6xl mx-auto">
                 
                 {/* Back Button */}
@@ -75,7 +75,7 @@ export function Vacancies() {
 
           {/* Job Details Content */}
           <section className="py-12 bg-white">
-            <div className="w-full px-4 md:px-8 lg:px-20">
+            <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
               <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   

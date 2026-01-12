@@ -1,13 +1,19 @@
 import React from 'react';
 
 export const Icons = {
-  ArrowRight: ({ className = "w-4 h-4" }: { className?: string }) => (
+  ArrowRight: ({ className = "w-4" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
   
-  Location: ({ className = "w-5 h-5" }: { className?: string }) => (
+  ArrowRightWhite: ({ className = "w-4" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 12L10 8L6 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
+  
+  Location: ({ className = "w-[15px]" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M10 10C11.1046 10 12 9.10457 12 8C12 6.89543 11.1046 6 10 6C8.89543 6 8 6.89543 8 8C8 9.10457 8.89543 10 10 10Z" fill="currentColor"/>
       <path d="M10 2C6.68629 2 4 4.68629 4 8C4 12 10 18 10 18C10 18 16 12 16 8C16 4.68629 13.3137 2 10 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -21,9 +27,47 @@ export const Icons = {
     </svg>
   ),
   
-  Filter: ({ className = "w-[15px]" }: { className?: string }) => (
+  Brand: ({ className = "w-[15px] opacity-[0.3]" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 4H18M5 10H15M8 16H12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <rect x="2" y="6" width="16" height="8" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M6 6V4C6 2.89543 6.89543 2 8 2H12C13.1046 2 14 2.89543 14 4V6" stroke="currentColor" strokeWidth="1.5"/>
+      <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+    </svg>
+  ),
+  
+  Type: ({ className = "w-[15px] opacity-[0.3]" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 12L6 8L8 6L16 6L18 10L18 14L4 14Z" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+      <circle cx="7" cy="14" r="1.5" fill="currentColor"/>
+      <circle cx="15" cy="14" r="1.5" fill="currentColor"/>
+    </svg>
+  ),
+  
+  Calendar: ({ className = "w-[15px] opacity-[0.3]" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="4" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M3 8H17M7 2V6M13 2V6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  
+  Dollar: ({ className = "w-[15px] opacity-[0.3]" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 1V19M6 5H12C13.6569 5 15 6.34315 15 8C15 9.65685 13.6569 11 12 11H6M6 11H12C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  
+  Gauge: ({ className = "w-[15px] opacity-[0.3]" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M10 6V10L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  
+  More: ({ className = "w-[15px] opacity-[0.3]" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+      <circle cx="4" cy="10" r="1.5" fill="currentColor"/>
+      <circle cx="16" cy="10" r="1.5" fill="currentColor"/>
     </svg>
   ),
   
@@ -46,83 +90,21 @@ export const Icons = {
   ),
 };
 
-export const CarTypeIcons = {
-  Sedan: ({ className = "w-16 md:w-20" }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 60 L25 50 L30 45 L70 45 L75 50 L80 60 L80 70 L20 70 Z" fill="#8B82F6" opacity="0.2"/>
-      <path d="M20 60 L25 50 L30 45 L70 45 L75 50 L80 60" stroke="#8B82F6" strokeWidth="2" fill="none"/>
-      <rect x="20" y="60" width="60" height="10" fill="#8B82F6" opacity="0.3"/>
-      <circle cx="30" cy="70" r="5" fill="#1A1A1A"/>
-      <circle cx="70" cy="70" r="5" fill="#1A1A1A"/>
-      <rect x="35" y="47" width="12" height="8" fill="#8B82F6" opacity="0.4"/>
-      <rect x="53" y="47" width="12" height="8" fill="#8B82F6" opacity="0.4"/>
-    </svg>
-  ),
-  
-  SUV: ({ className = "w-16 md:w-20" }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 55 L25 45 L30 40 L70 40 L75 45 L80 55 L80 70 L20 70 Z" fill="#8B82F6" opacity="0.2"/>
-      <path d="M20 55 L25 45 L30 40 L70 40 L75 45 L80 55" stroke="#8B82F6" strokeWidth="2" fill="none"/>
-      <rect x="20" y="55" width="60" height="15" fill="#8B82F6" opacity="0.3"/>
-      <circle cx="30" cy="70" r="6" fill="#1A1A1A"/>
-      <circle cx="70" cy="70" r="6" fill="#1A1A1A"/>
-      <rect x="33" y="42" width="14" height="10" fill="#8B82F6" opacity="0.4"/>
-      <rect x="53" y="42" width="14" height="10" fill="#8B82F6" opacity="0.4"/>
-    </svg>
-  ),
-  
-  Hatchback: ({ className = "w-16 md:w-20" }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M25 58 L30 48 L35 45 L65 45 L65 58 L75 58 L75 68 L25 68 Z" fill="#8B82F6" opacity="0.2"/>
-      <path d="M25 58 L30 48 L35 45 L65 45 L65 58" stroke="#8B82F6" strokeWidth="2" fill="none"/>
-      <rect x="25" y="58" width="50" height="10" fill="#8B82F6" opacity="0.3"/>
-      <circle cx="33" cy="68" r="5" fill="#1A1A1A"/>
-      <circle cx="67" cy="68" r="5" fill="#1A1A1A"/>
-      <rect x="38" y="47" width="10" height="8" fill="#8B82F6" opacity="0.4"/>
-      <rect x="52" y="47" width="10" height="8" fill="#8B82F6" opacity="0.4"/>
-    </svg>
-  ),
-  
-  Truck: ({ className = "w-16 md:w-20" }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="20" y="45" width="25" height="20" fill="#8B82F6" opacity="0.3"/>
-      <rect x="45" y="50" width="35" height="15" fill="#8B82F6" opacity="0.2"/>
-      <path d="M20 55 L25 45 L35 45 L40 50 L45 50" stroke="#8B82F6" strokeWidth="2" fill="none"/>
-      <rect x="28" y="47" width="10" height="8" fill="#8B82F6" opacity="0.4"/>
-      <circle cx="32" cy="70" r="6" fill="#1A1A1A"/>
-      <circle cx="72" cy="70" r="6" fill="#1A1A1A"/>
-      <rect x="20" y="65" width="60" height="5" fill="#8B82F6" opacity="0.3"/>
-    </svg>
-  ),
-  
-  VAN: ({ className = "w-16 md:w-20" }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="20" y="40" width="60" height="25" rx="2" fill="#8B82F6" opacity="0.2"/>
-      <path d="M20 55 L25 40 L75 40 L80 55" stroke="#8B82F6" strokeWidth="2" fill="none"/>
-      <rect x="20" y="55" width="60" height="10" fill="#8B82F6" opacity="0.3"/>
-      <circle cx="30" cy="68" r="5" fill="#1A1A1A"/>
-      <circle cx="70" cy="68" r="5" fill="#1A1A1A"/>
-      <rect x="28" y="43" width="10" height="10" fill="#8B82F6" opacity="0.4"/>
-      <rect x="42" y="43" width="10" height="10" fill="#8B82F6" opacity="0.4"/>
-      <rect x="56" y="43" width="10" height="10" fill="#8B82F6" opacity="0.4"/>
-    </svg>
-  ),
-  
-  Coupe: ({ className = "w-16 md:w-20" }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22 62 L28 52 L35 48 L65 50 L72 54 L78 62 L78 68 L22 68 Z" fill="#8B82F6" opacity="0.2"/>
-      <path d="M22 62 L28 52 L35 48 L65 50 L72 54 L78 62" stroke="#8B82F6" strokeWidth="2" fill="none"/>
-      <rect x="22" y="62" width="56" height="6" fill="#8B82F6" opacity="0.3"/>
-      <circle cx="32" cy="70" r="5" fill="#1A1A1A"/>
-      <circle cx="68" cy="70" r="5" fill="#1A1A1A"/>
-      <rect x="38" y="50" width="10" height="7" fill="#8B82F6" opacity="0.4"/>
-      <rect x="52" y="52" width="10" height="7" fill="#8B82F6" opacity="0.4"/>
-    </svg>
-  ),
+// Реальні фото автомобілів з Unsplash
+export const CarImages = {
+  shop: 'https://images.unsplash.com/photo-1669606070146-84c7f32ebc34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjB3aGl0ZSUyMGJhY2tncm91bmR8ZW58MXx8fHwxNzY4MjAyNjg0fDA&ixlib=rb-4.1.0&q=80&w=400',
+  sell: 'https://images.unsplash.com/photo-1620444862038-768dbcfdaec1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBtb25leSUyMHNlbGwlMjB0cmFkZXxlbnwxfHx8fDE3NjgyMzMzOTF8MA&ixlib=rb-4.1.0&q=80&w=400',
+  sedan: 'https://images.unsplash.com/photo-1677522375397-b7a40324dfb3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZWRhbiUyMGNhciUyMHNpZGUlMjB2aWV3fGVufDF8fHx8MTc2ODIwMTAwNXww&ixlib=rb-4.1.0&q=80&w=300',
+  suv: 'https://images.unsplash.com/photo-1653325189816-5d8dc746cc16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxTVVYlMjBjYXIlMjBzaWRlJTIwdmlld3xlbnwxfHx8fDE3NjgyMDEwMTB8MA&ixlib=rb-4.1.0&q=80&w=300',
+  hatchback: 'https://images.unsplash.com/photo-1627280052756-cc5e080c8458?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXRjaGJhY2slMjBjYXJ8ZW58MXx8fHwxNzY4MTMyMTc0fDA&ixlib=rb-4.1.0&q=80&w=300',
+  truck: 'https://images.unsplash.com/photo-1767310621192-177f9713144f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaWNrdXAlMjB0cnVjayUyMHNpZGV8ZW58MXx8fHwxNzY4MjMzMzkzfDA&ixlib=rb-4.1.0&q=80&w=300',
+  van: 'https://images.unsplash.com/photo-1755805872526-1372a9d54a37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pdmFuJTIwY2FyfGVufDF8fHx8MTc2ODIzMzM5Nnww&ixlib=rb-4.1.0&q=80&w=300',
+  coupe: 'https://images.unsplash.com/photo-1696581084151-8a038c7dfc83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3VwZSUyMHNwb3J0cyUyMGNhcnxlbnwxfHx8fDE3NjgxNDgwMjB8MA&ixlib=rb-4.1.0&q=80&w=300',
 };
 
+// Логотипи брендів (SVG)
 export const BrandLogos = {
-  Toyota: ({ className = "w-16 md:w-20" }: { className?: string }) => (
+  Toyota: ({ className = "w-16 md:w-20 h-auto" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="40" cy="40" rx="16" ry="10" stroke="#1A1A1A" strokeWidth="2" fill="none"/>
       <ellipse cx="40" cy="40" rx="24" ry="14" stroke="#1A1A1A" strokeWidth="2" fill="none"/>
@@ -131,38 +113,37 @@ export const BrandLogos = {
     </svg>
   ),
   
-  Honda: ({ className = "w-16 md:w-20" }: { className?: string }) => (
+  Honda: ({ className = "w-16 md:w-20 h-auto" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 25 V55 M60 25 V55 M20 40 H32 M48 40 H60 M32 25 V55 M48 25 V55" stroke="#1A1A1A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
   
-  Ford: ({ className = "w-16 md:w-20" }: { className?: string }) => (
+  Ford: ({ className = "w-16 md:w-20 h-auto" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="40" cy="40" rx="30" ry="18" fill="#1A1A1A"/>
-      <text x="40" y="47" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="bold" fill="white" textAnchor="middle">FORD</text>
+      <ellipse cx="40" cy="40" rx="30" ry="18" fill="#003478"/>
+      <text x="40" y="47" fontFamily="Arial, sans-serif" fontSize="16" fontWeight="bold" fill="white" textAnchor="middle">FORD</text>
     </svg>
   ),
   
-  Nissan: ({ className = "w-16 md:w-20" }: { className?: string }) => (
+  Nissan: ({ className = "w-16 md:w-20 h-auto" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="40" cy="40" r="25" stroke="#1A1A1A" strokeWidth="3" fill="none"/>
-      <rect x="25" y="35" width="30" height="10" fill="#1A1A1A"/>
-      <text x="40" y="43" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="bold" fill="white" textAnchor="middle">NISSAN</text>
+      <circle cx="40" cy="40" r="25" stroke="#C3002F" strokeWidth="3" fill="none"/>
+      <rect x="22" y="35" width="36" height="10" rx="2" fill="#C3002F"/>
     </svg>
   ),
   
-  Hyundai: ({ className = "w-16 md:w-20" }: { className?: string }) => (
+  Hyundai: ({ className = "w-16 md:w-20 h-auto" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="40" cy="40" rx="28" ry="20" stroke="#1A1A1A" strokeWidth="3" fill="none"/>
-      <path d="M25 40 Q32 25, 40 40 T55 40" stroke="#1A1A1A" strokeWidth="3" fill="none"/>
+      <ellipse cx="40" cy="40" rx="28" ry="20" stroke="#002C5F" strokeWidth="3" fill="none"/>
+      <path d="M25 40 Q32 28, 40 40 T55 40" stroke="#002C5F" strokeWidth="3" fill="none"/>
     </svg>
   ),
   
-  Chevrolet: ({ className = "w-16 md:w-20" }: { className?: string }) => (
+  Chevrolet: ({ className = "w-16 md:w-20 h-auto" }: { className?: string }) => (
     <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M40 20 L55 35 L50 45 L40 40 L30 45 L25 35 Z" fill="#1A1A1A"/>
-      <path d="M40 45 L55 60 L50 70 L40 65 L30 70 L25 60 Z" fill="#1A1A1A"/>
+      <path d="M40 20 L55 32 L50 42 L40 38 L30 42 L25 32 Z" fill="#C8A96E"/>
+      <path d="M40 45 L55 57 L50 67 L40 63 L30 67 L25 57 Z" fill="#C8A96E"/>
     </svg>
   ),
 };

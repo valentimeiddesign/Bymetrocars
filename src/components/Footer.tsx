@@ -8,7 +8,7 @@ interface FooterProps {
 export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-      <div className="w-full px-4 md:px-8 lg:px-20">
+      <div className="w-full max-w-[2304px] mx-auto md:px-8 xl:px-[164px] px-[192px] py-[0px]">
         
         {/* Footer Content Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
@@ -86,6 +86,12 @@ export function Footer({ onNavigate }: FooterProps) {
           <p className="text-white text-sm opacity-[0.55]">
             © 2025 Buy Metro Pre-Owned. All rights reserved.
           </p>
+          <button 
+            onClick={() => onNavigate('admin')}
+            className="text-white text-xs opacity-30 hover:opacity-60 transition-opacity mt-2"
+          >
+            Admin
+          </button>
         </div>
       </div>
     </footer>

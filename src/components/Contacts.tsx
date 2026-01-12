@@ -65,7 +65,7 @@ export function Contacts() {
         
         {/* Get in Touch Section */}
         <section className="py-16 bg-[rgb(247,_247,_250)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 
@@ -164,7 +164,7 @@ export function Contacts() {
 
         {/* Locations Section */}
         <section className="py-16 bg-white">
-          <div className="w-full px-4 md:px-8 lg:px-20">
+          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <p className="text-[rgb(139,_130,_246)] text-xs uppercase tracking-[1.5px] mb-3">
                 VISIT US
