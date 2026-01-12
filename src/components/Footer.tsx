@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icons } from './Icons';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -19,11 +20,11 @@ export function Footer({ onNavigate }: FooterProps) {
               Your trusted pre-owned vehicle dealership offering quality cars at great prices.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
+              <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity text-white">
+                <Icons.Facebook />
               </a>
-              <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
-                <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
+              <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity text-white">
+                <Icons.Instagram />
               </a>
             </div>
           </div>
