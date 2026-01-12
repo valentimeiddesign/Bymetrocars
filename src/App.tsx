@@ -10,12 +10,14 @@ import { TopBanner } from './components/TopBanner';
 import { Quiz } from './components/Quiz';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminPanel } from './components/AdminPanel';
+import { CarDetails } from './components/CarDetails';
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
   const [companyMenuOpen, setCompanyMenuOpen] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [currentCarId, setCurrentCarId] = useState<number | null>(null);
 
   // Home page filters state
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
@@ -34,10 +36,14 @@ export default function App() {
   const [brandSearch, setBrandSearch] = useState('');
   const [showResults, setShowResults] = useState(false);
 
-  const navigateTo = (page: string) => {
+  const navigateTo = (page: string, carId?: number) => {
     setCurrentPage(page);
+    if (carId !== undefined) {
+      setCurrentCarId(carId);
+    }
     setMobileMenuOpen(false);
     setCompanyMenuOpen(false);
+    window.scrollTo(0, 0);
   };
 
   // Render Admin Login if accessing admin route and not authenticated
@@ -51,6 +57,184 @@ export default function App() {
       setIsAdminAuthenticated(false);
       setCurrentPage('home');
     }} />;
+  }
+
+  // Render Car Details page if that's the current page
+  if (currentPage.startsWith('car-') && currentCarId !== null) {
+    return (
+      <div className="min-h-screen w-full bg-white">
+        <div className="text-[rgb(51,_51,_51)] text-[14px] leading-[20px]" style={{"fontFamily":"Figtree, sans-serif"}}>
+          <TopBanner />
+          
+          {/* Header / Navigation */}
+          <header role="banner" className="sticky top-0 w-full h-[70px] bg-white border-b border-[rgba(30,30,30,0.08)] shadow-[rgba(5,15,35,0.05)_0px_6px_25px_0px] z-[998]">
+            <div className="flex items-center justify-between h-full px-4 md:px-8 lg:px-20">
+              
+              {/* Logo */}
+              <button onClick={() => navigateTo('home')} className="flex items-center">
+                <div className="font-semibold text-[rgb(5,_15,_35)] text-lg md:text-[20px]">Buy Metro Pre-Owned</div>
+              </button>
+
+              {/* Desktop Navigation */}
+              <nav role="navigation" className="hidden lg:flex items-center gap-8">
+                <button onClick={() => navigateTo('shop')} className="text-[rgb(139,_130,_246)] text-[16px] font-semibold">Shop Cars</button>
+                <button onClick={() => navigateTo('sell')} className="text-[rgb(5,_15,_35)] text-[16px] hover:text-[rgb(139,_130,_246)]">Sell or Trade Ins</button>
+                <button onClick={() => navigateTo('financing')} className="text-[rgb(5,_15,_35)] text-[16px] hover:text-[rgb(139,_130,_246)]">Financing</button>
+                <div className="relative">
+                  <button 
+                    className="flex items-center gap-1 text-[rgb(5,_15,_35)] text-[16px] hover:text-[rgb(139,_130,_246)]" 
+                    onClick={() => setCompanyMenuOpen(!companyMenuOpen)}
+                  >
+                    Company
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" className={`transition-transform ${companyMenuOpen ? 'rotate-180' : ''}`}>
+                      <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  {companyMenuOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-[999]">
+                      <button onClick={() => navigateTo('about')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">About us</button>
+                      <button onClick={() => navigateTo('contacts')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">Contacts</button>
+                      <button onClick={() => navigateTo('locations')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">Locations</button>
+                      <button onClick={() => navigateTo('vacancies')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">Vacancies</button>
+                    </div>
+                  )}
+                </div>
+              </nav>
+
+              {/* Location Button (Desktop) */}
+              <div className="hidden lg:flex items-center gap-[10px]">
+                <button className="flex items-center font-medium justify-center bg-[rgba(139,_130,_246,_0.15)] text-[rgb(139,_130,_246)] text-[16px] gap-[5px] py-[11px] px-[15px] rounded-full hover:bg-[rgba(139,_130,_246,_0.25)]">
+                  <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F6b77703cfdffe9b344c4b64a93c5913b0635893f.svg?generation=1768065159967914&alt=media" className="w-[15px]" alt="" />
+                  <span>Location</span>
+                </button>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button 
+                className="lg:hidden p-2 text-[rgb(5,_15,_35)]"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+              <div className="lg:hidden absolute top-[70px] left-0 w-full bg-white border-b border-[rgba(30,30,30,0.08)] shadow-lg z-[997]">
+                <nav className="flex flex-col p-4 gap-4">
+                  <button onClick={() => navigateTo('shop')} className="text-[rgb(139,_130,_246)] text-[16px] py-2 text-left font-semibold">Shop Cars</button>
+                  <button onClick={() => navigateTo('sell')} className="text-[rgb(5,_15,_35)] text-[16px] py-2 text-left">Sell or Trade Ins</button>
+                  <button onClick={() => navigateTo('financing')} className="text-[rgb(5,_15,_35)] text-[16px] py-2 text-left">Financing</button>
+                  <div className="text-[rgb(5,_15,_35)] text-[16px] py-2">Company</div>
+                  <button className="flex items-center justify-center font-medium bg-[rgba(139,_130,_246,_0.15)] text-[rgb(139,_130,_246)] text-[16px] gap-[5px] py-[11px] px-[15px] rounded-full">
+                    <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F6b77703cfdffe9b344c4b64a93c5913b0635893f.svg?generation=1768065159967914&alt=media" className="w-[15px]" alt="" />
+                    <span>Location</span>
+                  </button>
+                </nav>
+              </div>
+            )}
+          </header>
+
+          <CarDetails carId={currentCarId} onNavigate={navigateTo} />
+
+          {/* Footer */}
+          <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
+            <div className="w-full px-4 md:px-8 lg:px-20">
+              
+              {/* Footer Content Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
+                
+                {/* Company Info */}
+                <div className="flex flex-col gap-5">
+                  <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
+                  <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
+                    Your trusted pre-owned vehicle dealership offering quality cars at great prices.
+                  </p>
+                  <div className="flex gap-4">
+                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
+                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F8d2d90ddfc0fdadbbd5a15b3a29b23d6bb2dc02a.svg?generation=1768065160410529&alt=media" className="w-[25px]" alt="Facebook" />
+                    </a>
+                    <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity">
+                      <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F91aa0949f2598fc3974861dcd68765494604ff46.svg?generation=1768065160436982&alt=media" className="w-[25px]" alt="Instagram" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Browse Links */}
+                <div className="flex flex-col gap-5">
+                  <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
+                  <div className="flex flex-col gap-4">
+                    <button onClick={() => navigateTo('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
+                      Buy a vehicle
+                    </button>
+                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
+                      Return Policy
+                    </a>
+                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
+                      Trade-Ins
+                    </a>
+                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
+                      Loan Calculator
+                    </a>
+                  </div>
+                </div>
+
+                {/* Company Links */}
+                <div className="flex flex-col gap-5">
+                  <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
+                  <div className="flex flex-col gap-4">
+                    <button onClick={() => navigateTo('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
+                      Locations
+                    </button>
+                    <button onClick={() => navigateTo('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
+                      About us
+                    </button>
+                    <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
+                      Service
+                    </a>
+                    <button onClick={() => navigateTo('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
+                      Vacancies
+                    </button>
+                  </div>
+                </div>
+
+                {/* Contact Info */}
+                <div className="flex flex-col gap-5">
+                  <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
+                  <div className="flex flex-col gap-4">
+                    <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
+                      (902) 252 4422
+                    </a>
+                    <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
+                      (902) 466 0086
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer Bottom */}
+              <div className="border-t border-white/10 pt-8 text-center">
+                <p className="text-white text-sm opacity-[0.55]">
+                  © 2025 Buy Metro Pre-Owned. All rights reserved.
+                </p>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    );
   }
 
   // Render Quiz page if that's the current page
@@ -145,7 +329,7 @@ export default function App() {
             )}
           </header>
 
-          <ShopCars />
+          <ShopCars onNavigate={navigateTo} />
 
           {/* Footer */}
           <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
@@ -2390,7 +2574,10 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-5">
               
               {/* Shop Card */}
-              <a href="https://www.buymetropreowned.ca/shop" className="block rounded-[0.9375rem] hover:scale-[1.02] transition-transform">
+              <div 
+                onClick={() => navigateTo('shop')}
+                className="block rounded-[0.9375rem] hover:scale-[1.02] transition-transform cursor-pointer"
+              >
                 <div className="flex justify-between bg-[rgb(139,_130,_246)] min-h-[200px] p-6 md:p-[30px] rounded-[0.9375rem]">
                   <div className="flex flex-col justify-between">
                     <div className="flex flex-col gap-[15px]">
@@ -2404,13 +2591,15 @@ export default function App() {
                   </div>
                   <div className="bg-right bg-no-repeat bg-contain w-[40%] md:w-[50%]" style={{"backgroundImage":"url(\"https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F7c95e2a09225f1ef8ec1f736e3da23de74aa4269.png?generation=1768065160092373&alt=media\")"}}></div>
                 </div>
-              </a>
+              </div>
 
               {/* Sell Card */}
-              <a href="https://www.buymetropreowned.ca/sell" className="block rounded-[0.9375rem] hover:scale-[1.02] transition-transform">
+              <div 
+                onClick={() => navigateTo('quiz')}
+                className="block rounded-[0.9375rem] hover:scale-[1.02] transition-transform cursor-pointer"
+              >
                 <div 
-                  onClick={() => navigateTo('quiz')}
-                  className="flex justify-between border border-[rgba(139,_130,_246,_0.06)] min-h-[200px] p-6 md:p-[30px] rounded-[0.9375rem] cursor-pointer hover:shadow-lg transition-shadow" 
+                  className="flex justify-between border border-[rgba(139,_130,_246,_0.06)] min-h-[200px] p-6 md:p-[30px] rounded-[0.9375rem] hover:shadow-lg transition-shadow" 
                   style={{"backgroundImage":"linear-gradient(45deg, rgba(139, 130, 246, 0.05), rgba(139, 130, 246, 0.1))"}}
                 >
                   <div className="flex flex-col justify-between">
@@ -2425,7 +2614,7 @@ export default function App() {
                   </div>
                   <div className="bg-right bg-no-repeat bg-contain w-[40%] md:w-[50%]" style={{"backgroundImage":"url(\"https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fbc0d090c673c56be6b590b21e8b50278b5c8e770.png?generation=1768065160162107&alt=media\")"}}></div>
                 </div>
-              </a>
+              </div>
             </div>
 
             {/* Canadian Black Book Banner */}
@@ -2462,10 +2651,10 @@ export default function App() {
               <h2 className="font-semibold text-[rgb(5,_15,_35)] text-2xl md:text-3xl lg:text-[40px] tracking-[-1px]">
                 Browse by Type
               </h2>
-              <a href="https://www.buymetropreowned.ca/shop" className="flex items-center text-[rgb(139,_130,_246)] gap-[6px] hover:gap-[10px] transition-all">
+              <button onClick={() => navigateTo('shop')} className="flex items-center text-[rgb(139,_130,_246)] gap-[6px] hover:gap-[10px] transition-all">
                 <span className="font-semibold text-lg md:text-[18px]">Explore all types</span>
                 <img alt="Arrow" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F4c0c461d9029afe7890260e0f195ba7456d3d443.svg?generation=1768065160114159&alt=media" className="w-[10px]" />
-              </a>
+              </button>
             </div>
 
             {/* Vehicle Types Grid */}
@@ -2478,16 +2667,16 @@ export default function App() {
                 { name: 'VAN', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F895be9079cf146938f1bb84b08393f2011891622.png?generation=1768065160232148&alt=media' },
                 { name: 'Coupe', image: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F5dfda566e9f44a8dc35dfdadc4ceec47b8258047.png?generation=1768065160260108&alt=media' }
               ].map((type) => (
-                <a 
+                <div 
                   key={type.name}
-                  href="https://www.buymetropreowned.ca/shop" 
-                  className="block hover:scale-105 transition-transform"
+                  onClick={() => navigateTo('shop')}
+                  className="block hover:scale-105 transition-transform cursor-pointer"
                 >
                   <div className="flex flex-col items-center bg-white gap-2 p-4 rounded-[0.9375rem] shadow-sm hover:shadow-md">
                     <img alt={type.name} src={type.image} className="w-16 md:w-20" />
                     <p className="text-[rgb(5,_15,_35)] text-sm md:text-base">{type.name}</p>
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           </div>
@@ -2502,10 +2691,10 @@ export default function App() {
               <h2 className="font-semibold text-[rgb(5,_15,_35)] text-2xl md:text-3xl lg:text-[40px] tracking-[-1px]">
                 Popular Brands
               </h2>
-              <a href="https://www.buymetropreowned.ca/shop" className="flex items-center text-[rgb(139,_130,_246)] gap-[6px] hover:gap-[10px] transition-all">
+              <button onClick={() => navigateTo('shop')} className="flex items-center text-[rgb(139,_130,_246)] gap-[6px] hover:gap-[10px] transition-all">
                 <span className="font-semibold text-lg md:text-[18px]">Explore all brands</span>
                 <img alt="Arrow" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F4c0c461d9029afe7890260e0f195ba7456d3d443.svg?generation=1768065160114159&alt=media" className="w-[10px]" />
-              </a>
+              </button>
             </div>
 
             {/* Brands Grid */}
@@ -2518,15 +2707,15 @@ export default function App() {
                 { name: 'Hyundai', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fb3c5ec8adce4f6a9c0aef71e4cae48f4cf3f5a5a.svg?generation=1768065160355932&alt=media' },
                 { name: 'Chevrolet', logo: 'https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fdde1c69a65f48e79c3e5a8f7e4f1b5c4f7a8d8d8.svg?generation=1768065160373829&alt=media' }
               ].map((brand) => (
-                <a 
+                <div 
                   key={brand.name}
-                  href="https://www.buymetropreowned.ca/shop" 
-                  className="block hover:scale-105 transition-transform"
+                  onClick={() => navigateTo('shop')}
+                  className="block hover:scale-105 transition-transform cursor-pointer"
                 >
                   <div className="flex flex-col items-center justify-center bg-white gap-2 p-6 rounded-[0.9375rem] shadow-sm hover:shadow-md min-h-[100px]">
                     <img alt={brand.name} src={brand.logo} className="w-16 md:w-20 h-auto" />
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           </div>

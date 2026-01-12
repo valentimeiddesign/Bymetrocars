@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Search, Grid3x3, Car as CarIcon, Clock, DollarSign, Gauge, Menu, ChevronDown, ChevronUp } from 'lucide-react';
 
-export function ShopCars() {
+interface ShopCarsProps {
+  onNavigate?: (page: string, carId?: number) => void;
+}
+
+export function ShopCars({ onNavigate }: ShopCarsProps) {
   const [visibleCars, setVisibleCars] = useState(16);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
@@ -734,10 +738,10 @@ export function ShopCars() {
           <div className="w-full px-4 md:px-8 lg:px-20">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {carsToShow.map(car => (
-                <a 
+                <div
                   key={car.id} 
-                  href="#" 
-                  className="block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                  onClick={() => onNavigate && onNavigate(`car-${car.id}`, car.id)}
+                  className="block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                 >
                   {/* Car Image */}
                   <div className="relative w-full h-[180px] bg-gray-100">
@@ -773,7 +777,7 @@ export function ShopCars() {
                       </div>
                     </div>
                   </div>
-                </a>
+                </div>
               ))}
             </div>
             
