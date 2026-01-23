@@ -29,7 +29,7 @@ export async function fetchAllCars(): Promise<Car[]> {
   try {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -61,7 +61,7 @@ export async function fetchCarsWithFilters(filters: {
 }): Promise<Car[]> {
   try {
     const supabase = getSupabaseClient();
-    let query = supabase.from('cars').select('*');
+    let query = supabase.from('data').select('*');
 
     // Додаємо фільтри
     if (filters.status && filters.status !== 'all') {
@@ -116,7 +116,7 @@ export async function fetchCarById(carId: string): Promise<Car | null> {
   try {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .select('*')
       .eq('id', carId)
       .single();
@@ -140,7 +140,7 @@ export async function fetchCarBySlug(slug: string): Promise<Car | null> {
   try {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .select('*')
       .eq('slug', slug)
       .single();
@@ -164,7 +164,7 @@ export async function searchCars(searchTerm: string): Promise<Car[]> {
   try {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .select('*')
       .or(`make.ilike.%${searchTerm}%,model.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`)
       .order('created_at', { ascending: false });
@@ -194,7 +194,7 @@ export async function createCar(car: Partial<Car>): Promise<Car | null> {
     const dbCar = appCarToDbCar(car);
     
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .insert([dbCar])
       .select()
       .single();
@@ -220,7 +220,7 @@ export async function updateCar(carId: string, updates: Partial<Car>): Promise<C
     const dbUpdates = appCarToDbCar(updates);
     
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .update(dbUpdates)
       .eq('id', carId)
       .select()
@@ -245,7 +245,7 @@ export async function deleteCar(carId: string): Promise<boolean> {
   try {
     const supabase = getSupabaseClient();
     const { error } = await supabase
-      .from('cars')
+      .from('data')
       .delete()
       .eq('id', carId);
 
@@ -268,7 +268,7 @@ export async function updateCarStatus(carId: string, status: Car['status']): Pro
   try {
     const supabase = getSupabaseClient();
     const { error } = await supabase
-      .from('cars')
+      .from('data')
       .update({ status })
       .eq('id', carId);
 
@@ -290,7 +290,7 @@ export async function updateCarStatus(carId: string, status: Car['status']): Pro
 export async function incrementCarViews(carId: string): Promise<boolean> {
   try {
     const supabase = getSupabaseClient();
-    const { error } = await supabase.rpc('increment_car_views', { car_id: carId });
+    const { error } = await supabase.rpc('increment_car_views', { id: carId });
 
     if (error) {
       console.error('Error incrementing car views:', error);
@@ -320,7 +320,7 @@ export async function getCarsStats(): Promise<{
 }> {
   try {
     const supabase = getSupabaseClient();
-    const { data, error } = await supabase.from('cars').select('status, price');
+    const { data, error } = await supabase.from('data').select('status, price');
 
     if (error) {
       console.error('Error fetching cars stats:', error);
@@ -359,7 +359,7 @@ export async function bulkCreateCars(cars: Partial<Car>[]): Promise<{ success: n
 
     // Supabase підтримує batch insert
     const { data, error } = await supabase
-      .from('cars')
+      .from('data')
       .insert(dbCars)
       .select();
 
@@ -389,7 +389,7 @@ export async function deleteAllCars(): Promise<boolean> {
 
     const supabase = getSupabaseClient();
     const { error } = await supabase
-      .from('cars')
+      .from('data')
       .delete()
       .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all except impossible UUID
 
