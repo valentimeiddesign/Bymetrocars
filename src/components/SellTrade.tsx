@@ -27,7 +27,7 @@ export function SellTrade() {
 
       {/* Benefits Section */}
       <section className="py-16 bg-[rgb(250,_250,_253)]">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+        <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
             
             {/* Benefit 1 */}
@@ -81,7 +81,7 @@ export function SellTrade() {
 
       {/* Trade Program Section */}
       <section className="py-16 bg-white">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+        <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
             
             {/* Left Column - Trade Program */}
@@ -147,7 +147,7 @@ export function SellTrade() {
 
       {/* Testimonials Section */}
       <section className="py-16 bg-[rgb(250,_250,_253)]">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+        <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <p className="text-center text-[rgb(139,_130,_246)] text-sm uppercase tracking-[1.5px] mb-3">
             TESTIMONIALS
           </p>
@@ -235,7 +235,7 @@ export function SellTrade() {
 
       {/* CTA Section */}
       <section className="py-16 bg-white">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+        <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <div className="relative w-full h-[350px] md:h-[400px] rounded-2xl bg-cover bg-center overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWx8ZW58MXx8fHwxNzY4MDY4ODY5fDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
               <h2 className="text-white text-3xl md:text-4xl lg:text-[48px] font-semibold mb-8 leading-tight">

@@ -3,9 +3,11 @@ import { Search, Grid3x3, Car as CarIcon, Clock, DollarSign, Gauge, Menu, Chevro
 
 interface ShopCarsProps {
   onNavigate?: (page: string, carId?: number) => void;
+  allCars?: any[]; // Cars from Supabase
+  loading?: boolean;
 }
 
-export function ShopCars({ onNavigate }: ShopCarsProps) {
+export function ShopCars({ onNavigate, allCars = [], loading = false }: ShopCarsProps) {
   const [visibleCars, setVisibleCars] = useState(16);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
@@ -24,170 +26,6 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
 
-  // Mock car data
-  const allCars = [
-    {
-      id: 1,
-      name: '2019 VOLKSWAGEN JETTA HIGHLINE 4WD',
-      price: 19900,
-      mileage: 89500,
-      image: 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2xrc3dhZ2VuJTIwY2FyJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 2,
-      name: '2014 Ram 1500 ST 4WD Crew Cab 5.7 ft',
-      price: 26880,
-      mileage: 145000,
-      image: 'https://images.unsplash.com/photo-1761604771236-ee674782fe28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyYW0lMjB0cnVjayUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Pending'
-    },
-    {
-      id: 3,
-      name: '2016 RAM 1500 Outdoorsman 4WD Quad Cab',
-      price: 31895,
-      mileage: 78000,
-      image: 'https://images.unsplash.com/photo-1760810699887-0f37d54da23d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3JkJTIwc3V2JTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Pending'
-    },
-    {
-      id: 4,
-      name: '2020 FORD F-350 SUPER DUTY LARIAT 4.7L V8 TURBO DIESEL 4WD Crew Cab',
-      price: 84990,
-      mileage: 165000,
-      image: 'https://images.unsplash.com/photo-1669109777226-73e0ce597658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b3lvdGElMjBzdXYlMjBkZWFsZXJzaGlwfGVufDF8fHx8MTc2ODA2Nzk1MHww&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Pending'
-    },
-    {
-      id: 5,
-      name: '2016 RAM 2500 LARAMIE 5.7L CUMMINS TURBO DIESEL 4WD Crew Cab 14\'',
-      price: 52950,
-      mileage: 125000,
-      image: 'https://images.unsplash.com/photo-1662981535849-b65888e3ec45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25kYSUyMGNpdmljJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 6,
-      name: '2016 Ford F-150 Lariat Leather 5.0L V8',
-      price: 34500,
-      mileage: 98000,
-      image: 'https://images.unsplash.com/photo-1687730594701-88cdea1ef5ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuaXNzYW4lMjBzZWRhbiUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTUwfDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 7,
-      name: '2012 VOLVO C70 T5 Convertible',
-      price: 15990,
-      mileage: 132000,
-      image: 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2xrc3dhZ2VuJTIwY2FyJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 8,
-      name: '2013 Volkswagen Golf S6l H8 Auto',
-      price: 18800,
-      mileage: 95000,
-      image: 'https://images.unsplash.com/photo-1761604771236-ee674782fe28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyYW0lMjB0cnVjayUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 9,
-      name: '2016 Toyota 4Runner SR5 4WD 7 SEATS',
-      price: 35990,
-      mileage: 87000,
-      image: 'https://images.unsplash.com/photo-1760810699887-0f37d54da23d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3JkJTIwc3V2JTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 10,
-      name: '2021 FORD F-250 SUPER DUTY 6.7L TURBO DIESEL V8 TURBO DIESEL',
-      price: 65990,
-      mileage: 89000,
-      image: 'https://images.unsplash.com/photo-1669109777226-73e0ce597658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b3lvdGElMjBzdXYlMjBkZWFsZXJzaGlwfGVufDF8fHx8MTc2ODA2Nzk1MHww&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 11,
-      name: '2011 MITSUBISHI OUTLANDER XLS 4WD 3.0L V6 7 SEATS',
-      price: 15990,
-      mileage: 175000,
-      image: 'https://images.unsplash.com/photo-1662981535849-b65888e3ec45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25kYSUyMGNpdmljJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 12,
-      name: '2017 HONDA CIVIC SI',
-      price: 19990,
-      mileage: 87000,
-      image: 'https://images.unsplash.com/photo-1687730594701-88cdea1ef5ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuaXNzYW4lMjBzZWRhbiUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTUwfDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 13,
-      name: '2018 Nissan Qashqai SL AWD CVT',
-      price: 19850,
-      mileage: 108000,
-      image: 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2xrc3dhZ2VuJTIwY2FyJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 14,
-      name: '2016 Volkswagen Touareg LUX V6',
-      price: 19990,
-      mileage: 106000,
-      image: 'https://images.unsplash.com/photo-1761604771236-ee674782fe28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyYW0lMjB0cnVjayUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 15,
-      name: '2021 GMC SIERRA 1500 SLE DURAMAX 3.0L TURBO DIESEL 4WD Crew Cab 14"',
-      price: 53990,
-      mileage: 86000,
-      image: 'https://images.unsplash.com/photo-1760810699887-0f37d54da23d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3JkJTIwc3V2JTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 16,
-      name: '2017 Honda Odyssey 4dr Wgn SE',
-      price: 25500,
-      mileage: 118000,
-      image: 'https://images.unsplash.com/photo-1669109777226-73e0ce597658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b3lvdGElMjBzdXYlMjBkZWFsZXJzaGlwfGVufDF8fHx8MTc2ODA2Nzk1MHww&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 17,
-      name: '2019 Chevrolet Silverado 1500 LTZ',
-      price: 42990,
-      mileage: 65000,
-      image: 'https://images.unsplash.com/photo-1662981535849-b65888e3ec45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25kYSUyMGNpdmljJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 18,
-      name: '2015 Jeep Wrangler Unlimited Sahara',
-      price: 29990,
-      mileage: 95000,
-      image: 'https://images.unsplash.com/photo-1687730594701-88cdea1ef5ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuaXNzYW4lMjBzZWRhbiUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTUwfDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 19,
-      name: '2018 Mazda CX-5 GT AWD',
-      price: 24990,
-      mileage: 78000,
-      image: 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2xrc3dhZ2VuJTIwY2FyJTIwZGVhbGVyc2hpcHxlbnwxfHx8fDE3NjgwNjc5NDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    },
-    {
-      id: 20,
-      name: '2017 Subaru Outback 2.5i Limited',
-      price: 22990,
-      mileage: 112000,
-      image: 'https://images.unsplash.com/photo-1761604771236-ee674782fe28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyYW0lMjB0cnVjayUyMGRlYWxlcnNoaXB8ZW58MXx8fHwxNzY4MDY3OTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      status: 'Available'
-    }
-  ];
-
   const carsToShow = allCars.slice(0, visibleCars);
   const hasMore = visibleCars < allCars.length;
 
@@ -201,7 +39,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
         
         {/* Canadian Black Book Banner */}
         <section className="bg-[rgb(5,_14,_35)] py-6">
-          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+          <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
               <img alt="cbb-logo" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fefed42f33e169c093b471be984d4440ceafa20dc.svg?generation=1768065160121232&alt=media" className="w-[90px] h-auto" />
               <div className="text-center md:text-left">
@@ -221,7 +59,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
 
         {/* Equifax Banner */}
         <section className="bg-[rgb(139,_130,_246)] py-4">
-          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+          <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
               <img alt="Equifax" src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2Fb59c186f2cad3e26ce3aa602f80cd1e80973b93d.png?generation=1768065160065915&alt=media" className="w-[100px] md:w-[120px] h-auto" />
               <div className="text-white font-bold text-base md:text-[18px] text-center md:text-left" style={{"fontFamily":"\"AVA Proxima Nova\""}}>
@@ -237,7 +75,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
 
         {/* Search and Filters Section */}
         <section className="py-8 bg-[rgb(250,_250,_253)]">
-          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+          <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             
             {/* Search Bar */}
             <div className="flex items-center bg-white shadow-sm p-3 rounded-lg mb-4">
@@ -720,7 +558,7 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               <div className="flex gap-1 text-[14px]">
                 <span className="text-[rgb(5,_15,_35)] opacity-[0.6]">We found</span>
-                <span className="text-[rgb(139,_130,_246)] font-semibold">358</span>
+                <span className="text-[rgb(139,_130,_246)] font-semibold">{allCars.length}</span>
                 <span className="text-[rgb(5,_15,_35)] opacity-[0.6]">cars</span>
               </div>
               <button type="button" className="flex items-center gap-2 text-[rgb(5,_15,_35)] opacity-[0.6] hover:opacity-100">
@@ -735,29 +573,58 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
 
         {/* Car Listings Grid */}
         <section className="py-8 bg-white">
-          <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+          <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+            {/* Loading State */}
+            {loading && (
+              <div className="text-center py-16">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-[rgb(139,130,246)] rounded-full mb-4 animate-pulse">
+                  <svg className="w-8 h-8 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </div>
+                <p className="text-lg font-semibold text-[rgb(5,15,35)] mb-2">Loading cars...</p>
+              </div>
+            )}
+
+            {/* No Cars Found */}
+            {!loading && allCars.length === 0 && (
+              <div className="text-center py-16">
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-4">
+                  <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-[rgb(5,15,35)] mb-2">No cars found</h3>
+                <p className="text-gray-500">Try adjusting your filters or check back later</p>
+              </div>
+            )}
+
+            {/* Cars Grid */}
+            {!loading && allCars.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {carsToShow.map(car => (
+              {carsToShow.map((car, idx) => (
                 <div
-                  key={car.id} 
+                  key={`shop-car-${car.id}-${idx}`} 
                   onClick={() => onNavigate && onNavigate(`car-${car.id}`, car.id)}
                   className="block bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                 >
                   {/* Car Image */}
                   <div className="relative w-full h-[180px] bg-gray-100">
                     <img
-                      src={car.image}
-                      alt={car.name}
+                      src={car.image || 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?w=800'}
+                      alt={car.name || 'Car'}
                       className="w-full h-full object-cover"
                     />
                     {/* Status Badge */}
                     <div className="absolute top-3 left-3">
                       <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                        car.status === 'Available' 
+                        (car.status || 'Available') === 'Available' 
                           ? 'bg-green-500 text-white' 
                           : 'bg-orange-500 text-white'
                       }`}>
-                        {car.status}
+                        {car.status || 'Available'}
                       </span>
                     </div>
                   </div>
@@ -765,24 +632,25 @@ export function ShopCars({ onNavigate }: ShopCarsProps) {
                   {/* Car Details */}
                   <div className="p-3">
                     <h3 className="text-[rgb(5,_15,_35)] text-sm font-normal leading-tight mb-2 line-clamp-2">
-                      {car.name}
+                      {car.name || 'Unknown Car'}
                     </h3>
                     
                     <div className="flex items-center justify-between mt-3">
                       <div className="text-[rgb(5,_15,_35)] font-bold text-lg">
-                        ${car.price.toLocaleString()}
+                        ${(car.price || 0).toLocaleString()}
                       </div>
                       <div className="text-[rgb(5,_15,_35)] opacity-[0.5] text-xs">
-                        {car.mileage.toLocaleString()} km
+                        {(car.mileage || 0).toLocaleString()} km
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            )}
             
             {/* Load More Button */}
-            {hasMore && (
+            {!loading && hasMore && (
               <div className="mt-10 text-center">
                 <button
                   type="button"

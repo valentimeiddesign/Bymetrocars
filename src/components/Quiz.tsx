@@ -80,7 +80,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
         
         {/* Header / Navigation */}
         <header role="banner" className="sticky top-0 w-full h-[70px] bg-white border-b border-[rgba(30,30,30,0.08)] shadow-[rgba(5,15,35,0.05)_0px_6px_25px_0px] z-[998]">
-          <div className="flex items-center justify-between h-full px-4 md:px-8 lg:px-20">
+          <div className="max-w-[2304px] mx-auto flex items-center justify-between h-full px-4 md:px-8 lg:px-20 2xl:px-32">
             
             {/* Logo */}
             <button onClick={() => onNavigate('home')} className="flex items-center">
@@ -186,7 +186,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <button
                   onClick={() => setVehicleType('car')}
-                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-[12px] flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'car' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -202,7 +202,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
 
                 <button
                   onClick={() => setVehicleType('truck')}
-                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-[12px] flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'truck' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -218,7 +218,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
 
                 <button
                   onClick={() => setVehicleType('suv')}
-                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-[12px] flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'suv' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -234,7 +234,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
 
                 <button
                   onClick={() => setVehicleType('van')}
-                  className={`p-6 border-2 rounded-full flex flex-col items-center gap-4 transition-all ${
+                  className={`p-6 border-2 rounded-[12px] flex flex-col items-center gap-4 transition-all ${
                     vehicleType === 'van' 
                       ? 'border-[rgb(139,130,246)] bg-[rgba(139,130,246,0.05)]' 
                       : 'border-gray-200 hover:border-gray-300'
@@ -906,7 +906,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
 
       {/* Footer */}
       <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-        <div className="w-full max-w-[1920px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+        <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           
           {/* Footer Content Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">

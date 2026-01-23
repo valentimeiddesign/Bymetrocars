@@ -18,7 +18,7 @@ export function FilterSection() {
   const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
 
   return (
-    <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 xl:px-[164px] py-6">
+    <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32 py-6">
       {/* Filter Buttons */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         {[

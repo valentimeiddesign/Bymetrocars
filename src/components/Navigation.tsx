@@ -24,7 +24,7 @@ export function Navigation({
       <TopBanner />
       
       <header role="banner" className="sticky top-0 w-full h-[70px] bg-white border-b border-[rgba(30,30,30,0.08)] shadow-[rgba(5,15,35,0.05)_0px_6px_25px_0px] z-[998]">
-        <div className="flex items-center justify-between h-full px-4 md:px-8 lg:px-20">
+        <div className="max-w-[2304px] mx-auto flex items-center justify-between h-full px-4 md:px-8 lg:px-20 2xl:px-32">
           
           {/* Logo */}
           <button onClick={() => navigateTo('home')} className="flex items-center">

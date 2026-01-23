@@ -3,7 +3,7 @@ import React from 'react';
 export function TopBanner() {
   return (
     <section className="bg-[rgb(139,_130,_246)] py-2">
-      <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 xl:px-[164px]">
+      <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
         <div className="items-center flex justify-center gap-[10px] text-center">
           <div className="text-white text-sm md:text-[14.4px]">New vehicles every week!</div>
           <a href="#" className="flex items-center gap-[6px]">

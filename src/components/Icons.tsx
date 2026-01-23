@@ -88,6 +88,14 @@ export const Icons = {
       <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
+  
+  RefreshCw: ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M23 4V10H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M1 20V14H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M3.51 9C4.01 7.56 4.89 6.28 6.05 5.3C7.21 4.32 8.61 3.68 10.12 3.45C11.63 3.22 13.17 3.42 14.57 4.02C15.97 4.62 17.17 5.6 18.04 6.84L23 10M1 14L5.96 17.16C6.83 18.4 8.03 19.38 9.43 19.98C10.83 20.58 12.37 20.78 13.88 20.55C15.39 20.32 16.79 19.68 17.95 18.7C19.11 17.72 19.99 16.44 20.49 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
 };
 
 // Реальні фото автомобілів з Unsplash

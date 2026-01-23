@@ -4,12 +4,16 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
+          "@jsr/supabase__supabase-js": "^2.49.8",
+          "@supabase/supabase-js": "*",
+          "hono": "*",
           "lucide-react": "*",
           "react": "^18.3.1",
           "react-dnd": "*",
           "react-dnd-html5-backend": "*",
           "react-dom": "^18.3.1",
-          "recharts": "*"
+          "recharts": "*",
+          "xlsx": "*"
       },
       "devDependencies": {
           "@types/node": "^20.10.0",

@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Search, Plus, Edit, Trash2, Eye, DollarSign, Calendar, Gauge, Check, X, Upload, Image as ImageIcon, GripVertical, Database } from 'lucide-react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import * as carApi from '../utils/carApi';
+import { CarImportExport } from './CarImportExport';
 
 interface CarImage {
   id: string;
@@ -419,6 +421,58 @@ export function AdminCars() {
   const [activeDatabase, setActiveDatabase] = useState<'all' | 'db'>('all');
   const [allCars, setAllCars] = useState<Car[]>(mockAllCars);
   const [dbCars, setDBCars] = useState<Car[]>(mockDBCars);
+  const [loading, setLoading] = useState(true);
+  const [syncError, setSyncError] = useState<string | null>(null);
+  
+  // Завантаження даних з Supabase
+  useEffect(() => {
+    loadCarsFromSupabase();
+  }, []);
+
+  const loadCarsFromSupabase = async () => {
+    try {
+      setLoading(true);
+      setSyncError(null);
+      
+      console.log('🔄 Loading cars from Supabase for Admin Panel...');
+      const cars = await carApi.fetchAllCars();
+      console.log(`✅ Loaded ${cars.length} cars from Supabase`);
+      
+      // Конвертуємо Supabase формат в AdminCars формат
+      const convertedCars: Car[] = cars.map((car, index) => ({
+        id: car.id || `car-${index}`,
+        make: car.make || 'Unknown',
+        model: car.model || 'Unknown',
+        year: Number(car.year) || new Date().getFullYear(),
+        price: Number(car.price) || 0,
+        mileage: Number(car.mileage) || 0,
+        status: (car.status as Car['status']) || 'Available',
+        type: (car.type as Car['type']) || 'Sedan',
+        vin: car.vin || '',
+        color: car.color || '',
+        transmission: (car.transmission as Car['transmission']) || 'Automatic',
+        fuelType: (car.fuelType as Car['fuelType']) || 'Gasoline',
+        leads: 0,
+        images: car.images?.map(img => ({
+          id: img.id || `img-${Math.random()}`,
+          url: img.url
+        })) || [],
+        source: 'db'
+      }));
+      
+      // Оновлюємо DB Cars з даними з Supabase
+      setDBCars(convertedCars);
+      
+      // Якщо DB Cars порожня, залишаємо mock дані в All Cars
+      // Інакше можна синхронізувати обидві бази
+      
+    } catch (err) {
+      console.error('❌ Failed to load cars from Supabase:', err);
+      setSyncError('Failed to sync with database. Using local data.');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Вибираємо активну базу даних
   const cars = activeDatabase === 'all' ? allCars : dbCars;
@@ -695,15 +749,33 @@ export function AdminCars() {
         <div className="px-6 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-[rgb(5,15,35)]">Cars Management</h1>
-            <p className="text-sm text-gray-500 mt-1">Manage your vehicle inventory</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Manage your vehicle inventory
+              {syncError && (
+                <span className="ml-2 text-orange-600">⚠️ {syncError}</span>
+              )}
+              {!loading && !syncError && dbCars.length > 0 && (
+                <span className="ml-2 text-green-600">✅ Synced with Supabase</span>
+              )}
+            </p>
           </div>
-          <button
-            onClick={() => setIsAddingCar(true)}
-            className="flex items-center gap-2 bg-[rgb(139,130,246)] text-white px-6 py-3 rounded-lg hover:bg-[rgb(120,110,230)] transition-colors font-semibold"
-          >
-            <Plus className="w-5 h-5" />
-            Add New Car
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={loadCarsFromSupabase}
+              disabled={loading}
+              className="flex items-center gap-2 bg-white border-2 border-[rgb(139,130,246)] text-[rgb(139,130,246)] px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors font-semibold disabled:opacity-50"
+            >
+              <Database className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+              {loading ? 'Syncing...' : 'Sync DB'}
+            </button>
+            <button
+              onClick={() => setIsAddingCar(true)}
+              className="flex items-center gap-2 bg-[rgb(139,130,246)] text-white px-6 py-3 rounded-lg hover:bg-[rgb(120,110,230)] transition-colors font-semibold"
+            >
+              <Plus className="w-5 h-5" />
+              Add New Car
+            </button>
+          </div>
         </div>
       </div>
 
@@ -746,6 +818,11 @@ export function AdminCars() {
               </span>
             </div>
           </div>
+        </div>
+
+        {/* Import / Export Section */}
+        <div className="mb-6">
+          <CarImportExport onImportComplete={loadCarsFromSupabase} />
         </div>
 
         {/* Filters & Search */}
@@ -820,8 +897,8 @@ export function AdminCars() {
 
         {/* Cars Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCars.map((car) => (
-            <div key={car.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+          {filteredCars.map((car, idx) => (
+            <div key={`admin-car-${car.id}-${idx}`} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
               {/* Car Image */}
               <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 relative">
                 {car.images && car.images.length > 0 ? (
