@@ -31,7 +31,9 @@ export interface Car {
   location?: string;
   
   // Зображення
-  images?: CarImage[];
+  images?: string[];
+
+  image?: string;
   
   // Додаткові поля
   description?: string;
@@ -77,7 +79,8 @@ export interface DatabaseCar {
   transmission?: string;
   fuel_type?: string;
   location?: string;
-  images?: any;
+  image?: string;
+  images?: string;
   description?: string;
   features?: string[];
   body_style?: string;
@@ -114,7 +117,8 @@ export function dbCarToAppCar(dbCar: DatabaseCar): Car {
     transmission: dbCar.transmission as Car['transmission'],
     fuel_type: dbCar.fuel_type as Car['fuel_type'],
     location: dbCar.location,
-    images: dbCar.images || [],
+    image: dbCar.image,
+    images: dbCar.images?.replace(/\s/g, '').split(';') || [],
     description: dbCar.description,
     features: dbCar.features,
     body_style: dbCar.body_style,
@@ -151,7 +155,7 @@ export function appCarToDbCar(car: Partial<Car>): Partial<DatabaseCar> {
     transmission: car.transmission,
     fuel_type: car.fuel_type,
     location: car.location,
-    images: car.images,
+    images: car.images?.join(' ;') || '',
     description: car.description,
     features: car.features,
     body_style: car.body_style,

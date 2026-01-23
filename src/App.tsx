@@ -101,7 +101,7 @@ export default function App() {
         name: `${car.year || ''} ${car.make || ''} ${car.model || ''}`.trim(),
         price: Number(car.price) || 0,
         mileage: Number(car.mileage) || 0,
-        image: car.images?.[0]?.url || 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?w=800',
+        image: car.image ? car.image : (car.images?.[0] || 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?w=800'),
         status: car.status || 'Available',
         location: car.location || '332 Sackville Drive'
       }));
