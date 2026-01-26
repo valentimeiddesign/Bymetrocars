@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { Breadcrumbs } from './Breadcrumbs';
 
-export function Contacts() {
+interface ContactsProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function Contacts({ onNavigate }: ContactsProps = {}) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -63,8 +68,13 @@ export function Contacts() {
     <div className="min-h-screen w-full bg-white">
       <div className="text-[rgb(51,_51,_51)] text-[14px] leading-[20px]" style={{"fontFamily":"Figtree, sans-serif"}}>
         
+        <Breadcrumbs 
+          items={[{ label: 'Contacts' }]} 
+          onNavigate={onNavigate || (() => {})} 
+        />
+
         {/* Get in Touch Section */}
-        <section className="py-16 bg-[rgb(247,_247,_250)]">
+        <section className="py-4 bg-[rgb(247,_247,_250)]">
           <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

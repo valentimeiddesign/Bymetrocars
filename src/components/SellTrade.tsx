@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
+import { Breadcrumbs } from './Breadcrumbs';
 
-export function SellTrade() {
+interface SellTradeProps {
+  onNavigate?: (page: string) => void;
+}
+
+import img1 from "figma:asset/82d33e1f4edbaf025323505b00adf1c7c03f00eb.png";
+
+export function SellTrade({ onNavigate }: SellTradeProps) {
   const [vehicleSearch, setVehicleSearch] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Vehicle search:', vehicleSearch);
+    if (vehicleSearch.trim()) {
+      alert(`Searching for trade-in value for: ${vehicleSearch}\n(This feature is a demo)`);
+    }
   };
 
   return (
     <>
+      <Breadcrumbs 
+        items={[{ label: 'Trade-In' }]} 
+        onNavigate={onNavigate || (() => {})} 
+      />
       {/* Hero Section */}
-      <section className="relative w-full h-[400px] md:h-[500px] bg-cover bg-center" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWx8ZW58MXx8fHwxNzY4MDY4ODY5fDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
+      <section className="relative w-full h-[400px] md:h-[500px] bg-cover bg-center" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${img1})`}}>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <p className="text-white text-sm md:text-base uppercase tracking-[2px] mb-3 opacity-90">
             SELL OR TRADE IN
@@ -19,14 +32,17 @@ export function SellTrade() {
           <h1 className="text-white text-3xl md:text-5xl lg:text-[56px] font-semibold mb-8 leading-tight">
             Sell your car with ease
           </h1>
-          <button className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-md hover:bg-[rgb(120,_110,_230)] text-base transition-colors">
+          <button 
+            onClick={() => document.getElementById('trade-form')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-md hover:bg-[rgb(120,_110,_230)] text-base transition-colors"
+          >
             Get Started
           </button>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-[rgb(250,_250,_253)]">
+      <section className="py-4 bg-[rgb(250,_250,_253)]">
         <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
             
@@ -80,7 +96,7 @@ export function SellTrade() {
       </section>
 
       {/* Trade Program Section */}
-      <section className="py-16 bg-white">
+      <section className="py-4 bg-white" id="trade-form">
         <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
             
@@ -146,7 +162,7 @@ export function SellTrade() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-[rgb(250,_250,_253)]">
+      <section className="py-4 bg-[rgb(250,_250,_253)]">
         <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <p className="text-center text-[rgb(139,_130,_246)] text-sm uppercase tracking-[1.5px] mb-3">
             TESTIMONIALS
@@ -173,7 +189,11 @@ export function SellTrade() {
                 Thanks Trade!
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1599566147214-ce487862ea4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMHBlcnNvbiUyMGZhY2UlMjBhdmF0YXJ8ZW58MXx8fHwxNzY5Mzc5MTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                  alt="Cassie"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
                 <div>
                   <p className="text-[rgb(5,_15,_35)] font-semibold text-sm">Cassie</p>
                   <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-xs">December 2, 2021</p>
@@ -200,7 +220,11 @@ export function SellTrade() {
                 Thanks to Manager Alexander for help with the choice.
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1705940372495-ab4ed45d3102?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0JTIwZmFjZXxlbnwxfHx8fDE3NjkzNDY5MjF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  alt="Kristina" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
                 <div>
                   <p className="text-[rgb(5,_15,_35)] font-semibold text-sm">Kristina</p>
                   <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-xs">February</p>
@@ -218,10 +242,14 @@ export function SellTrade() {
                 ))}
               </div>
               <p className="text-[rgb(5,_15,_35)] text-sm mb-4 leading-relaxed">
-                Great service and staff. Kathy was able to answer all her questions I had and gotten me into an amazing vehicle
+                Great service and staff. Kylan was able to answer all her questions I had and gotten me into an amazing vehicle
               </p>
               <div className="flex items-center gap-3 mt-auto">
-                <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1619950498711-c2d22c4c3cb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYW4lMjBzbWlsaW5nJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzY5MzU5MTE4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                  alt="Kylee"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
                 <div>
                   <p className="text-[rgb(5,_15,_35)] font-semibold text-sm">Kylee</p>
                   <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-xs">March 2021</p>
@@ -234,7 +262,7 @@ export function SellTrade() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-white">
+      <section className="py-4 bg-white">
         <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
           <div className="relative w-full h-[350px] md:h-[400px] rounded-2xl bg-cover bg-center overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWx8ZW58MXx8fHwxNzY4MDY4ODY5fDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
@@ -242,10 +270,16 @@ export function SellTrade() {
                 Buy or sell cars in one<br />place
               </h2>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-md hover:bg-[rgb(120,_110,_230)] text-base transition-colors">
+                <button 
+                  onClick={() => onNavigate?.('shop')}
+                  className="bg-[rgb(139,_130,_246)] text-white font-semibold px-8 py-3 rounded-md hover:bg-[rgb(120,_110,_230)] text-base transition-colors"
+                >
                   Buy a Vehicle
                 </button>
-                <button className="bg-white text-[rgb(5,_15,_35)] font-semibold px-8 py-3 rounded-md hover:bg-gray-100 text-base transition-colors">
+                <button 
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className="bg-white text-[rgb(5,_15,_35)] font-semibold px-8 py-3 rounded-md hover:bg-gray-100 text-base transition-colors"
+                >
                   Sell a Vehicle
                 </button>
               </div>

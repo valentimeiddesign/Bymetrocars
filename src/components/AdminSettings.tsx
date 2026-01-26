@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Settings, Code, Globe, Mail, Users, Activity, Save, Eye, EyeOff, Copy, Check } from 'lucide-react';
+import { projectId, publicAnonKey } from '../utils/supabase/info';
 
 interface Integration {
   id: string;
@@ -7,100 +8,109 @@ interface Integration {
   description: string;
   enabled: boolean;
   value: string;
-  type: 'script' | 'id' | 'pixel';
+  type: 'script' | 'id' | 'pixel' | 'meta';
   category: 'Analytics' | 'Advertising' | 'Chat' | 'Other';
 }
 
 const initialIntegrations: Integration[] = [
   {
+    id: 'ava-credit',
+    name: 'AVA Credit Financing',
+    description: 'Widget ID (e.g. c521f0267d40)',
+    enabled: true,
+    value: 'c521f0267d40',
+    type: 'id',
+    category: 'Other'
+  },
+  {
+    id: 'form-url-tracker',
+    name: 'Form URL Tracker',
+    description: 'Auto-fill #current-page input with current URL',
+    enabled: true,
+    value: 'true',
+    type: 'script',
+    category: 'Other'
+  },
+  {
     id: 'gtm',
     name: 'Google Tag Manager',
-    description: 'GTM Container ID (GTM-XXXXXXX)',
-    enabled: false,
-    value: '',
+    description: 'Container ID (GTM-XXXXXXX)',
+    enabled: true,
+    value: 'GTM-PSBL32L5',
     type: 'id',
     category: 'Analytics'
   },
   {
-    id: 'ga4',
-    name: 'Google Analytics 4',
-    description: 'GA4 Measurement ID (G-XXXXXXXXXX)',
-    enabled: false,
-    value: '',
+    id: 'hubspot',
+    name: 'HubSpot',
+    description: 'HubSpot Portal ID',
+    enabled: true,
+    value: '44569445',
     type: 'id',
+    category: 'Other'
+  },
+  {
+    id: 'it-rating',
+    name: 'IT Rating',
+    description: 'IT Rating ID (Comma separated if multiple)',
+    enabled: true,
+    value: 'it-rat-cdeb52717835198b5e8727a49e1059e4, it-rat-2a39522147659e181415715889f1b43d',
+    type: 'meta',
+    category: 'Other'
+  },
+  {
+    id: 'nocodelytics',
+    name: 'Nocodelytics',
+    description: 'Enable Nocodelytics Tracking',
+    enabled: true,
+    value: 'true',
+    type: 'script', // Special handling in AnalyticsScripts
     category: 'Analytics'
+  },
+  {
+    id: 'meta-pixel-capital',
+    name: 'Meta Pixel (Capital Auto Sales)',
+    description: 'Pixel ID',
+    enabled: true,
+    value: '989069795731420',
+    type: 'pixel',
+    category: 'Advertising'
+  },
+  {
+    id: 'meta-pixel-commercial',
+    name: 'Meta Pixel (Capital A Sales)',
+    description: 'Pixel ID',
+    enabled: true,
+    value: '1247291926043434',
+    type: 'pixel',
+    category: 'Advertising'
+  },
+  {
+    id: 'meta-pixel-generic',
+    name: 'Meta Pixel (Main)',
+    description: 'Pixel ID',
+    enabled: true,
+    value: '1537490300473033',
+    type: 'pixel',
+    category: 'Advertising'
   },
   {
     id: 'google-ads',
     name: 'Google Ads',
     description: 'Google Ads ID (AW-XXXXXXXXXX)',
-    enabled: false,
-    value: '',
+    enabled: true,
+    value: 'AW-16542483188',
     type: 'id',
-    category: 'Advertising'
-  },
-  {
-    id: 'google-ads-conversion',
-    name: 'Google Ads Conversion Tracking',
-    description: 'Conversion Label',
-    enabled: false,
-    value: '',
-    type: 'id',
-    category: 'Advertising'
-  },
-  {
-    id: 'facebook-pixel',
-    name: 'Facebook Pixel',
-    description: 'Facebook Pixel ID',
-    enabled: false,
-    value: '',
-    type: 'pixel',
     category: 'Advertising'
   },
   {
     id: 'tiktok-pixel',
     name: 'TikTok Pixel',
     description: 'TikTok Pixel ID',
-    enabled: false,
-    value: '',
+    enabled: true,
+    value: 'CQGGIVRC77U9MQRMRJTG',
     type: 'pixel',
     category: 'Advertising'
-  },
-  {
-    id: 'hubspot',
-    name: 'HubSpot',
-    description: 'HubSpot Portal ID',
-    enabled: false,
-    value: '',
-    type: 'id',
-    category: 'Other'
-  },
-  {
-    id: 'hubspot-chat',
-    name: 'HubSpot Chat',
-    description: 'HubSpot Chat Embed Code',
-    enabled: false,
-    value: '',
-    type: 'script',
-    category: 'Chat'
-  },
-  {
-    id: 'clarity',
-    name: 'Microsoft Clarity',
-    description: 'Clarity Project ID',
-    enabled: false,
-    value: '',
-    type: 'id',
-    category: 'Analytics'
-  },
-  {
-    id: 'cloudflare',
-    name: 'Cloudflare',
-    description: 'Cloudflare Site Key',
-    enabled: false,
-    value: '',
-    type: 'id',
-    category: 'Other'
   }
 ];
 
@@ -149,6 +159,47 @@ export function AdminSettings() {
     ogImage: 'https://images.unsplash.com/photo-1605152277138-359efd4a6862?w=1200'
   });
 
+  // Fetch settings on mount
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-baa3db23/settings`, {
+          headers: {
+            'Authorization': `Bearer ${publicAnonKey}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data) {
+            if (data.integrations) {
+              // Merge with initial integrations to ensure new fields are present
+              setIntegrations(prev => {
+                const newIntegrations = [...prev];
+                data.integrations.forEach((savedInt: Integration) => {
+                  const index = newIntegrations.findIndex(i => i.id === savedInt.id);
+                  if (index !== -1) {
+                    newIntegrations[index] = { ...newIntegrations[index], ...savedInt };
+                  } else {
+                    // Optional: decide if you want to keep integrations removed from code
+                    // For now, we only keep what's in code or updated
+                  }
+                });
+                return newIntegrations;
+              });
+            }
+            if (data.siteSettings) setSiteSettings(data.siteSettings);
+            if (data.seoSettings) setSeoSettings(data.seoSettings);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching settings:", error);
+      }
+    };
+    
+    fetchSettings();
+  }, []);
+
   const toggleIntegration = (id: string) => {
     setIntegrations(integrations.map(int => 
       int.id === id ? { ...int, enabled: !int.enabled } : int
@@ -171,10 +222,31 @@ export function AdminSettings() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleSave = () => {
-    // Mock save - в реальному проекті тут буде API запит
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-baa3db23/settings`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${publicAnonKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          integrations,
+          siteSettings,
+          seoSettings
+        })
+      });
+
+      if (response.ok) {
+        setIsSaved(true);
+        setTimeout(() => setIsSaved(false), 3000);
+      } else {
+        alert("Failed to save settings");
+      }
+    } catch (error) {
+      console.error("Error saving settings:", error);
+      alert("Error saving settings");
+    }
   };
 
   const getCategoryColor = (category: string) => {

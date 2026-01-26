@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, Eye, Mail, Phone, Calendar, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { projectId, publicAnonKey } from '../utils/supabase/info';
 
 interface Lead {
   id: string;
   name: string;
   email: string;
   phone: string;
-  source: 'Quiz' | 'Contact Form' | 'Financing' | 'Trade-In';
+  source: string;
   status: 'New' | 'Contacted' | 'Qualified' | 'Converted' | 'Lost';
   carInterest?: string;
   date: string;
@@ -14,121 +15,61 @@ interface Lead {
   notes?: string;
 }
 
-// Mock дані лідів
-const mockLeads: Lead[] = [
-  {
-    id: '1',
-    name: 'John Smith',
-    email: 'john.smith@email.com',
-    phone: '+1 (555) 123-4567',
-    source: 'Quiz',
-    status: 'New',
-    carInterest: 'Honda Civic 2022',
-    date: '2026-01-11',
-    budget: '$25,000 - $30,000',
-    notes: 'Interested in financing options'
-  },
-  {
-    id: '2',
-    name: 'Sarah Johnson',
-    email: 'sarah.j@email.com',
-    phone: '+1 (555) 234-5678',
-    source: 'Financing',
-    status: 'Contacted',
-    carInterest: 'Toyota Camry 2023',
-    date: '2026-01-10',
-    budget: '$30,000 - $35,000'
-  },
-  {
-    id: '3',
-    name: 'Michael Brown',
-    email: 'mbrown@email.com',
-    phone: '+1 (555) 345-6789',
-    source: 'Contact Form',
-    status: 'Qualified',
-    carInterest: 'Ford F-150 2021',
-    date: '2026-01-09',
-    budget: '$40,000+'
-  },
-  {
-    id: '4',
-    name: 'Emily Davis',
-    email: 'emily.d@email.com',
-    phone: '+1 (555) 456-7890',
-    source: 'Trade-In',
-    status: 'Converted',
-    carInterest: 'BMW 3 Series 2022',
-    date: '2026-01-08',
-    budget: '$35,000 - $40,000',
-    notes: 'Traded in 2018 Honda Accord'
-  },
-  {
-    id: '5',
-    name: 'David Wilson',
-    email: 'dwilson@email.com',
-    phone: '+1 (555) 567-8901',
-    source: 'Quiz',
-    status: 'Lost',
-    carInterest: 'Tesla Model 3',
-    date: '2026-01-07',
-    budget: '$45,000+',
-    notes: 'Went with another dealer'
-  },
-  {
-    id: '6',
-    name: 'Lisa Anderson',
-    email: 'lisa.a@email.com',
-    phone: '+1 (555) 678-9012',
-    source: 'Quiz',
-    status: 'New',
-    carInterest: 'Mazda CX-5 2023',
-    date: '2026-01-11',
-    budget: '$28,000 - $32,000'
-  },
-  {
-    id: '7',
-    name: 'Robert Taylor',
-    email: 'rtaylor@email.com',
-    phone: '+1 (555) 789-0123',
-    source: 'Financing',
-    status: 'Contacted',
-    carInterest: 'Hyundai Tucson 2022',
-    date: '2026-01-10',
-    budget: '$26,000 - $30,000'
-  },
-  {
-    id: '8',
-    name: 'Jennifer Martinez',
-    email: 'jmartinez@email.com',
-    phone: '+1 (555) 890-1234',
-    source: 'Contact Form',
-    status: 'New',
-    carInterest: 'Nissan Rogue 2023',
-    date: '2026-01-11',
-    budget: '$30,000 - $35,000'
-  }
-];
-
 export function AdminLeads() {
-  const [leads, setLeads] = useState<Lead[]>(mockLeads);
+  const [leads, setLeads] = useState<Lead[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSource, setFilterSource] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Фільтрація лідів
-  const filteredLeads = leads.filter(lead => {
-    const matchesSearch = 
-      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.phone.includes(searchTerm) ||
-      lead.carInterest?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesSource = filterSource === 'all' || lead.source === filterSource;
-    const matchesStatus = filterStatus === 'all' || lead.status === filterStatus;
-    
-    return matchesSearch && matchesSource && matchesStatus;
-  });
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  const fetchLeads = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-baa3db23/leads`, {
+        headers: {
+          'Authorization': `Bearer ${publicAnonKey}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setLeads(data);
+      }
+    } catch (error) {
+      console.error('Error fetching leads:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateLeadStatus = async (leadId: string, newStatus: Lead['status']) => {
+    // Optimistic update
+    setLeads(leads.map(lead => 
+      lead.id === leadId ? { ...lead, status: newStatus } : lead
+    ));
+    if (selectedLead?.id === leadId) {
+      setSelectedLead({ ...selectedLead, status: newStatus });
+    }
+
+    try {
+      await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-baa3db23/leads/${leadId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${publicAnonKey}`
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+    } catch (error) {
+      console.error('Error updating status:', error);
+      // Revert if failed (optional, but good practice)
+      fetchLeads(); 
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -151,14 +92,19 @@ export function AdminLeads() {
     }
   };
 
-  const updateLeadStatus = (leadId: string, newStatus: Lead['status']) => {
-    setLeads(leads.map(lead => 
-      lead.id === leadId ? { ...lead, status: newStatus } : lead
-    ));
-    if (selectedLead?.id === leadId) {
-      setSelectedLead({ ...selectedLead, status: newStatus });
-    }
-  };
+  // Фільтрація лідів
+  const filteredLeads = leads.filter(lead => {
+    const matchesSearch = 
+      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.phone.includes(searchTerm) ||
+      lead.carInterest?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesSource = filterSource === 'all' || lead.source === filterSource;
+    const matchesStatus = filterStatus === 'all' || lead.status === filterStatus;
+    
+    return matchesSearch && matchesSource && matchesStatus;
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">

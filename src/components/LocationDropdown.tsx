@@ -8,6 +8,8 @@ interface LocationDropdownProps {
   setLocationMenuOpen: (open: boolean) => void;
   setSelectedLocation: (location: string | null) => void;
   allCars: any[];
+  mode?: 'default' | 'icon';
+  onNavigate?: (page: string) => void;
 }
 
 export function LocationDropdown({
@@ -16,18 +18,29 @@ export function LocationDropdown({
   locationMenuOpen,
   setLocationMenuOpen,
   setSelectedLocation,
-  allCars
+  allCars,
+  mode = 'default',
+  onNavigate
 }: LocationDropdownProps) {
   return (
     <div className="relative">
-      <button 
-        onClick={() => setLocationMenuOpen(!locationMenuOpen)}
-        className="flex items-center font-medium justify-center bg-[rgba(139,_130,_246,_0.15)] text-[rgb(139,_130,_246)] text-[16px] gap-[5px] py-[11px] px-[15px] rounded-full hover:bg-[rgba(139,_130,_246,_0.25)]"
-      >
-        <Icons.Location />
-        <span>{selectedLocation || 'Location'}</span>
-        <Icons.ChevronDown className={`w-4 h-4 transition-transform ${locationMenuOpen ? 'rotate-180' : ''}`} />
-      </button>
+      {mode === 'icon' ? (
+        <button 
+          onClick={() => setLocationMenuOpen(!locationMenuOpen)}
+          className="p-2 text-[rgb(5,_15,_35)]"
+        >
+          <Icons.Location className="w-6 h-6" />
+        </button>
+      ) : (
+        <button 
+          onClick={() => setLocationMenuOpen(!locationMenuOpen)}
+          className="flex items-center font-medium justify-center bg-[rgba(139,_130,_246,_0.15)] text-[rgb(139,_130,_246)] text-[16px] gap-[5px] py-[11px] px-[15px] rounded-full hover:bg-[rgba(139,_130,_246,_0.25)]"
+        >
+          <Icons.Location />
+          <span>{selectedLocation || 'Location'}</span>
+          <Icons.ChevronDown className={`w-4 h-4 transition-transform ${locationMenuOpen ? 'rotate-180' : ''}`} />
+        </button>
+      )}
       
       {locationMenuOpen && (
         <>
@@ -48,6 +61,9 @@ export function LocationDropdown({
                     onClick={() => {
                       setSelectedLocation(location);
                       setLocationMenuOpen(false);
+                      if (onNavigate) {
+                        onNavigate('shop');
+                      }
                     }}
                     className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors ${
                       selectedLocation === location ? 'bg-[rgba(139,_130,_246,_0.1)]' : ''

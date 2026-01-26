@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Breadcrumbs } from './Breadcrumbs';
 import { Icons } from './Icons';
 import { TopBanner } from './TopBanner';
 import imgFordSedan from "figma:asset/62436b94333b992271b2bd63a2d69bb6c9ee5f70.png";
@@ -76,88 +77,11 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
   return (
     <div className="min-h-screen w-full bg-white">
       <div className="text-[rgb(51,_51,_51)] text-[14px] leading-[20px]" style={{"fontFamily":"Figtree, sans-serif"}}>
-        <TopBanner />
         
-        {/* Header / Navigation */}
-        <header role="banner" className="sticky top-0 w-full h-[70px] bg-white border-b border-[rgba(30,30,30,0.08)] shadow-[rgba(5,15,35,0.05)_0px_6px_25px_0px] z-[998]">
-          <div className="max-w-[2304px] mx-auto flex items-center justify-between h-full px-4 md:px-8 lg:px-20 2xl:px-32">
-            
-            {/* Logo */}
-            <button onClick={() => onNavigate('home')} className="flex items-center">
-              <div className="font-semibold text-[rgb(5,_15,_35)] text-lg md:text-[20px]">Buy Metro Pre-Owned</div>
-            </button>
-
-            {/* Desktop Navigation */}
-            <nav role="navigation" className="hidden lg:flex items-center gap-8">
-              <button onClick={() => onNavigate('shop')} className="text-[rgb(5,_15,_35)] text-[16px] hover:text-[rgb(139,_130,_246)]">Shop Cars</button>
-              <button onClick={() => onNavigate('sell')} className="text-[rgb(5,_15,_35)] text-[16px] hover:text-[rgb(139,_130,_246)]">Sell or Trade Ins</button>
-              <button onClick={() => onNavigate('financing')} className="text-[rgb(139,_130,_246)] text-[16px] font-semibold">Financing</button>
-              <div className="relative">
-                <button 
-                  className="flex items-center gap-1 text-[rgb(5,_15,_35)] text-[16px] hover:text-[rgb(139,_130,_246)]" 
-                  onClick={() => setCompanyMenuOpen(!companyMenuOpen)}
-                >
-                  Company
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" className={`transition-transform ${companyMenuOpen ? 'rotate-180' : ''}`}>
-                    <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-                {companyMenuOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-[999]">
-                    <button onClick={() => onNavigate('about')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">About us</button>
-                    <button onClick={() => onNavigate('contacts')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">Contacts</button>
-                    <button onClick={() => onNavigate('locations')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">Locations</button>
-                    <button onClick={() => onNavigate('vacancies')} className="block w-full text-left px-4 py-2 text-[rgb(5,_15,_35)] text-[16px] hover:bg-gray-50">Vacancies</button>
-                  </div>
-                )}
-              </div>
-            </nav>
-
-            {/* Location Button (Desktop) */}
-            <div className="hidden lg:flex items-center gap-[10px]">
-              <button className="flex items-center font-medium justify-center bg-[rgba(139,_130,_246,_0.15)] text-[rgb(139,_130,_246)] text-[16px] gap-[5px] py-[11px] px-[15px] rounded-full hover:bg-[rgba(139,_130,_246,_0.25)]">
-                <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F6b77703cfdffe9b344c4b64a93c5913b0635893f.svg?generation=1768065159967914&alt=media" className="w-[15px]" alt="" />
-                <span>Location</span>
-              </button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button 
-              className="lg:hidden p-2 text-[rgb(5,_15,_35)]"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              ) : (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden absolute top-[70px] left-0 w-full bg-white border-b border-[rgba(30,30,30,0.08)] shadow-lg z-[997]">
-              <nav className="flex flex-col p-4 gap-4">
-                <button onClick={() => { onNavigate('shop'); setMobileMenuOpen(false); }} className="text-[rgb(5,_15,_35)] text-[16px] py-2 text-left">Shop Cars</button>
-                <button onClick={() => { onNavigate('sell'); setMobileMenuOpen(false); }} className="text-[rgb(5,_15,_35)] text-[16px] py-2">Sell or Trade Ins</button>
-                <button onClick={() => { onNavigate('financing'); setMobileMenuOpen(false); }} className="text-[rgb(139,_130,_246)] text-[16px] py-2 font-semibold">Financing</button>
-                <div className="text-[rgb(5,_15,_35)] text-[16px] py-2">Company</div>
-                <button className="flex items-center justify-center font-medium bg-[rgba(139,_130,_246,_0.15)] text-[rgb(139,_130,_246)] text-[16px] gap-[5px] py-[11px] px-[15px] rounded-full">
-                  <img src="https://storage.googleapis.com/download/storage/v1/b/prd-shared-services.firebasestorage.app/o/h2m-assets%2F6b77703cfdffe9b344c4b64a93c5913b0635893f.svg?generation=1768065159967914&alt=media" className="w-[15px]" alt="" />
-                  <span>Location</span>
-                </button>
-              </nav>
-            </div>
-          )}
-        </header>
+      <Breadcrumbs 
+        items={[{ label: 'Get Approved' }]} 
+        onNavigate={onNavigate || (() => {})} 
+      />
 
       {/* Quiz Section */}
       <div className="py-12 md:py-16">
@@ -904,89 +828,7 @@ export function Quiz({ onNavigate }: QuizProps = {}) {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-[rgb(5,_15,_35)] py-12 md:py-16">
-        <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
-          
-          {/* Footer Content Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8">
-            
-            {/* Company Info */}
-            <div className="flex flex-col gap-5">
-              <div className="font-semibold text-white text-xl md:text-[20px]">Buy Metro Pre-Owned</div>
-              <p className="text-white text-sm md:text-[16px] opacity-[0.55] leading-relaxed">
-                Your trusted pre-owned vehicle dealership offering quality cars at great prices.
-              </p>
-              <div className="flex gap-4">
-                <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity text-white">
-                  <Icons.Facebook />
-                </a>
-                <a href="#" className="opacity-[0.55] hover:opacity-100 transition-opacity text-white">
-                  <Icons.Instagram />
-                </a>
-              </div>
-            </div>
 
-            {/* Browse Links */}
-            <div className="flex flex-col gap-5">
-              <p className="font-medium text-white text-lg md:text-[18px]">Browse</p>
-              <div className="flex flex-col gap-4">
-                <button onClick={() => onNavigate('shop')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                  Buy a vehicle
-                </button>
-                <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                  Return Policy
-                </a>
-                <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                  Trade-Ins
-                </a>
-                <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                  Loan Calculator
-                </a>
-              </div>
-            </div>
-
-            {/* Company Links */}
-            <div className="flex flex-col gap-5">
-              <p className="font-medium text-white text-lg md:text-[18px]">Company</p>
-              <div className="flex flex-col gap-4">
-                <button onClick={() => onNavigate('locations')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                  Locations
-                </button>
-                <button onClick={() => onNavigate('about')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                  About us
-                </button>
-                <a href="#" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                  Service
-                </a>
-                <button onClick={() => onNavigate('vacancies')} className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity text-left">
-                  Vacancies
-                </button>
-              </div>
-            </div>
-
-            {/* Contact Info */}
-            <div className="flex flex-col gap-5">
-              <p className="font-medium text-white text-lg md:text-[18px]">Contacts</p>
-              <div className="flex flex-col gap-4">
-                <a href="tel:9022524422" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                  (902) 252 4422
-                </a>
-                <a href="tel:9024660086" className="text-white text-sm md:text-[16px] opacity-[0.55] hover:opacity-100 transition-opacity">
-                  (902) 466 0086
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer Bottom */}
-          <div className="border-t border-white/10 pt-8 text-center">
-            <p className="text-white text-sm opacity-[0.55]">
-              © 2025 Buy Metro Pre-Owned. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
       </div>
     </div>
   );

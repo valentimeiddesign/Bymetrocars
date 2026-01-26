@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { Breadcrumbs } from './Breadcrumbs';
 
-export function Vacancies() {
+interface VacanciesProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function Vacancies({ onNavigate }: VacanciesProps = {}) {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
 
   const salesConsultantDetails = {
@@ -36,10 +41,18 @@ export function Vacancies() {
       <div className="min-h-screen w-full bg-[rgb(250,_250,_253)]">
         <div className="text-[rgb(51,_51,_51)] text-[14px] leading-[20px]" style={{"fontFamily":"Figtree, sans-serif"}}>
           
+          <Breadcrumbs 
+            items={[
+              { label: 'Vacancies', onClick: () => setSelectedJob(null) },
+              { label: 'Sales Consultant' }
+            ]} 
+            onNavigate={onNavigate || (() => {})} 
+          />
+
           {/* Job Detail Header */}
-          <section className="py-12 md:py-16 bg-[rgb(250,_250,_253)]">
+          <section className="py-4 bg-[rgb(250,_250,_253)]">
             <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
-              <div className="max-w-6xl mx-auto">
+              <div className="w-full">
                 
                 {/* Back Button */}
                 <button 
@@ -74,9 +87,9 @@ export function Vacancies() {
           </section>
 
           {/* Job Details Content */}
-          <section className="py-12 bg-white">
+          <section className="py-4 bg-white">
             <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
-              <div className="max-w-6xl mx-auto">
+              <div className="w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   
                   {/* Tasks */}
@@ -128,10 +141,15 @@ export function Vacancies() {
     <div className="min-h-screen w-full bg-[rgb(250,_250,_253)]">
       <div className="text-[rgb(51,_51,_51)] text-[14px] leading-[20px]" style={{"fontFamily":"Figtree, sans-serif"}}>
         
+        <Breadcrumbs 
+            items={[{ label: 'Vacancies' }]} 
+            onNavigate={onNavigate || (() => {})} 
+        />
+
         {/* Hero Section */}
-        <section className="py-16 md:py-20 bg-[rgb(250,_250,_253)]">
-          <div className="w-full px-4 md:px-8 lg:px-20">
-            <div className="max-w-4xl mx-auto">
+        <section className="py-4 bg-[rgb(250,_250,_253)]">
+          <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
+            <div className="w-full">
               <p className="text-[rgb(139,_130,_246)] text-sm uppercase tracking-[2px] mb-3">
                 WE ARE HIRING!
               </p>

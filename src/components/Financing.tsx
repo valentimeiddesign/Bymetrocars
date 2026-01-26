@@ -1,4 +1,5 @@
 import image_e6fe213950e5d9ef144275ea40cf1faddf56d574 from 'figma:asset/e6fe213950e5d9ef144275ea40cf1faddf56d574.png';
+import { Breadcrumbs } from './Breadcrumbs';
 import React, { useState } from 'react';
 
 interface FinancingProps {
@@ -26,6 +27,11 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
     <div className="min-h-screen w-full bg-white">
       <div className="text-[rgb(51,_51,_51)] text-[14px] leading-[20px]" style={{"fontFamily":"Figtree, sans-serif"}}>
         
+        <Breadcrumbs 
+          items={[{ label: 'Financing' }]} 
+          onNavigate={onNavigate || (() => {})} 
+        />
+
         {/* Hero Section */}
         <section className="relative w-full h-[400px] md:h-[500px] bg-cover bg-center" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBmaW5hbmNpbmclMjBoYW5kc2hha2V8ZW58MXx8fHwxNzY4MDc1MzMxfDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
@@ -45,7 +51,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
         </section>
 
         {/* Benefits Section */}
-        <section className="py-16 bg-[rgb(250,_250,_253)]">
+        <section className="py-4 bg-[rgb(250,_250,_253)]">
           <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
               
@@ -99,7 +105,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
         </section>
 
         {/* Financing Info & Form Section */}
-        <section className="py-16 bg-white">
+        <section className="py-4 bg-white">
           <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
               
@@ -238,7 +244,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-16 bg-[rgb(250,_250,_253)]">
+        <section className="py-4 bg-[rgb(250,_250,_253)]">
           <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <h2 className="text-center font-semibold text-[rgb(5,_15,_35)] text-3xl md:text-4xl mb-12">
               What people says
@@ -259,7 +265,11 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
                   I recently bought a preowned vehicle from Manager Mack. He was very patient and attentive to all our needs and made sure we got exactly what we wanted. Every interaction was pleasant and helpful. And in the end I drove away a great deal! I highly on a great new car a great deal!
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1599566147214-ce487862ea4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMHBlcnNvbiUyMGZhY2UlMjBhdmF0YXJ8ZW58MXx8fHwxNzY5Mzc5MTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                    alt="Carsten"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
                   <div>
                     <p className="text-[rgb(5,_15,_35)] font-semibold text-sm">Carsten</p>
                     <p className="text-[rgb(5,_15,_35)] opacity-[0.6] text-xs">December 30, 2020</p>
@@ -283,7 +293,11 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
                   Thanks to Manager Alexander for help with the choice.
                 </p>
                 <div className="flex items-center gap-3 mt-auto">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1705940372495-ab4ed45d3102?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0JTIwZmFjZXxlbnwxfHx8fDE3NjkzNDY5MjF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                    alt="Antony" 
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
                   <div>
                     <p className="text-[rgb(5,_15,_35)] font-semibold text-sm">Antony</p>
                   </div>
@@ -303,7 +317,11 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
                   Great service and staff. Kylan was able to answer all her questions I had and gotten me into an amazing vehicle
                 </p>
                 <div className="flex items-center gap-3 mt-auto">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1619950498711-c2d22c4c3cb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYW4lMjBzbWlsaW5nJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzY5MzU5MTE4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                    alt="Kylee"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
                   <div>
                     <p className="text-[rgb(5,_15,_35)] font-semibold text-sm">Kylee</p>
                   </div>
@@ -315,7 +333,7 @@ export function Financing({ onNavigate }: FinancingProps = {}) {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-white">
+        <section className="py-4 bg-white">
           <div className="w-full max-w-[2304px] mx-auto px-4 md:px-8 lg:px-20 2xl:px-32">
             <div className="relative w-full rounded-2xl bg-cover bg-center overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1591527292000-95f01a0d1496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBmaW5hbmNpbmclMjBoYW5kc2hha2V8ZW58MXx8fHwxNzY4MDc1MzMxfDA&ixlib=rb-4.1.0&q=80&w=1080')`}}>
               <div className="py-16 px-4 text-center">

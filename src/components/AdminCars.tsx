@@ -1,231 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Plus, Edit, Trash2, Eye, DollarSign, Calendar, Gauge, Check, X, Upload, Image as ImageIcon, GripVertical, Database } from 'lucide-react';
+import { Search, Plus, Edit, Trash2, Eye, DollarSign, Calendar, Gauge, Check, X, Upload, GripVertical, RefreshCw, Image as ImageIcon } from 'lucide-react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import * as carApi from '../utils/carApi';
+import { getSupabaseClient } from '../utils/carApi';
 import { CarImportExport } from './CarImportExport';
+import type { Car } from '../types/car';
 
 interface CarImage {
   id: string;
   url: string;
   file?: File;
 }
-
-interface Car {
-  id: string;
-  make: string;
-  model: string;
-  year: number;
-  price: number;
-  mileage: number;
-  status: 'Available' | 'Sold' | 'Reserved' | 'Service';
-  type: 'Sedan' | 'SUV' | 'Truck' | 'Coupe' | 'Hatchback';
-  images?: CarImage[];
-  vin?: string;
-  color?: string;
-  transmission?: 'Automatic' | 'Manual';
-  fuelType?: 'Gasoline' | 'Diesel' | 'Electric' | 'Hybrid';
-  leads?: number;
-  source: 'all' | 'db'; // Додано для визначення джерела
-}
-
-// Mock дані автомобілів - All Cars (внутрішня база)
-const mockAllCars: Car[] = [
-  {
-    id: '1',
-    make: 'Honda',
-    model: 'Civic',
-    year: 2022,
-    price: 25900,
-    mileage: 15000,
-    status: 'Available',
-    type: 'Sedan',
-    vin: '1HGBH41JXMN109186',
-    color: 'Silver',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 45,
-    images: [
-      { id: '1-1', url: 'https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=800' }
-    ],
-    source: 'all'
-  },
-  {
-    id: '2',
-    make: 'Toyota',
-    model: 'Camry',
-    year: 2023,
-    price: 32500,
-    mileage: 8000,
-    status: 'Available',
-    type: 'Sedan',
-    vin: '4T1BF1FK5HU123456',
-    color: 'Blue',
-    transmission: 'Automatic',
-    fuelType: 'Hybrid',
-    leads: 38,
-    images: [
-      { id: '2-1', url: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800' }
-    ],
-    source: 'all'
-  },
-  {
-    id: '3',
-    make: 'Ford',
-    model: 'F-150',
-    year: 2021,
-    price: 42000,
-    mileage: 25000,
-    status: 'Reserved',
-    type: 'Truck',
-    vin: '1FTFW1E84MFA12345',
-    color: 'Red',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 32,
-    images: [
-      { id: '3-1', url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800' }
-    ],
-    source: 'all'
-  },
-  {
-    id: '4',
-    make: 'BMW',
-    model: '3 Series',
-    year: 2022,
-    price: 38900,
-    mileage: 12000,
-    status: 'Sold',
-    type: 'Sedan',
-    vin: 'WBA8E9G59HNU12345',
-    color: 'Black',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 28,
-    images: [
-      { id: '4-1', url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800' }
-    ],
-    source: 'all'
-  },
-  {
-    id: '5',
-    make: 'Tesla',
-    model: 'Model 3',
-    year: 2023,
-    price: 45900,
-    mileage: 5000,
-    status: 'Available',
-    type: 'Sedan',
-    vin: '5YJ3E1EA1KF123456',
-    color: 'White',
-    transmission: 'Automatic',
-    fuelType: 'Electric',
-    leads: 24,
-    images: [
-      { id: '5-1', url: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800' }
-    ],
-    source: 'all'
-  },
-  {
-    id: '6',
-    make: 'Mazda',
-    model: 'CX-5',
-    year: 2023,
-    price: 31500,
-    mileage: 10000,
-    status: 'Available',
-    type: 'SUV',
-    vin: 'JM3KFBDM5N0123456',
-    color: 'Gray',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 22,
-    images: [
-      { id: '6-1', url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800' }
-    ],
-    source: 'all'
-  }
-];
-
-// Mock дані автомобілів - DB Cars (зовнішня база даних)
-const mockDBCars: Car[] = [
-  {
-    id: 'db-1',
-    make: 'Chevrolet',
-    model: 'Silverado 1500',
-    year: 2022,
-    price: 48900,
-    mileage: 18000,
-    status: 'Available',
-    type: 'Truck',
-    vin: '1GCUYEED5NZ123456',
-    color: 'Black',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 56,
-    images: [
-      { id: 'db-1-1', url: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800' }
-    ],
-    source: 'db'
-  },
-  {
-    id: 'db-2',
-    make: 'Audi',
-    model: 'Q5',
-    year: 2023,
-    price: 52900,
-    mileage: 7000,
-    status: 'Available',
-    type: 'SUV',
-    vin: 'WA1AAAF40P123456',
-    color: 'White',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 42,
-    images: [
-      { id: 'db-2-1', url: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800' }
-    ],
-    source: 'db'
-  },
-  {
-    id: 'db-3',
-    make: 'Mercedes-Benz',
-    model: 'C-Class',
-    year: 2022,
-    price: 44900,
-    mileage: 15000,
-    status: 'Reserved',
-    type: 'Sedan',
-    vin: '55SWF4JB1NU123456',
-    color: 'Silver',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 38,
-    images: [
-      { id: 'db-3-1', url: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800' }
-    ],
-    source: 'db'
-  },
-  {
-    id: 'db-4',
-    make: 'Jeep',
-    model: 'Grand Cherokee',
-    year: 2023,
-    price: 46500,
-    mileage: 9000,
-    status: 'Available',
-    type: 'SUV',
-    vin: '1C4RJFBG0PC123456',
-    color: 'Blue',
-    transmission: 'Automatic',
-    fuelType: 'Gasoline',
-    leads: 35,
-    images: [
-      { id: 'db-4-1', url: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800' }
-    ],
-    source: 'db'
-  }
-];
 
 // Draggable Image Component
 interface DraggableImageProps {
@@ -261,7 +47,7 @@ function DraggableImage({ image, index, moveImage, onRemove }: DraggableImagePro
     },
   });
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: 'image',
     item: () => {
       return { index };
@@ -418,72 +204,24 @@ function ImageUpload({ images, onChange }: ImageUploadProps) {
 }
 
 export function AdminCars() {
-  const [activeDatabase, setActiveDatabase] = useState<'all' | 'db'>('all');
-  const [allCars, setAllCars] = useState<Car[]>(mockAllCars);
-  const [dbCars, setDBCars] = useState<Car[]>(mockDBCars);
+  const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
-  const [syncError, setSyncError] = useState<string | null>(null);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
-  // Завантаження даних з Supabase
-  useEffect(() => {
-    loadCarsFromSupabase();
-  }, []);
-
-  const loadCarsFromSupabase = async () => {
-    try {
-      setLoading(true);
-      setSyncError(null);
-      
-      console.log('🔄 Loading cars from Supabase for Admin Panel...');
-      const cars = await carApi.fetchAllCars();
-      console.log(`✅ Loaded ${cars.length} cars from Supabase`);
-      
-      // Конвертуємо Supabase формат в AdminCars формат
-      const convertedCars: Car[] = cars.map((car, index) => ({
-        id: car.id || `car-${index}`,
-        make: car.make || 'Unknown',
-        model: car.model || 'Unknown',
-        year: Number(car.year) || new Date().getFullYear(),
-        price: Number(car.price) || 0,
-        mileage: Number(car.mileage) || 0,
-        status: (car.status as Car['status']) || 'Available',
-        type: (car.type as Car['type']) || 'Sedan',
-        vin: car.vin || '',
-        color: car.color || '',
-        transmission: (car.transmission as Car['transmission']) || 'Automatic',
-        fuelType: (car.fuelType as Car['fuelType']) || 'Gasoline',
-        leads: 0,
-        images: car.images?.map(img => ({
-          id: img.id || `img-${Math.random()}`,
-          url: img.url
-        })) || [],
-        source: 'db'
-      }));
-      
-      // Оновлюємо DB Cars з даними з Supabase
-      setDBCars(convertedCars);
-      
-      // Якщо DB Cars порожня, залишаємо mock дані в All Cars
-      // Інакше можна синхронізувати обидві бази
-      
-    } catch (err) {
-      console.error('❌ Failed to load cars from Supabase:', err);
-      setSyncError('Failed to sync with database. Using local data.');
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  // Вибираємо активну базу даних
-  const cars = activeDatabase === 'all' ? allCars : dbCars;
-  const setCars = activeDatabase === 'all' ? setAllCars : setDBCars;
-  
+  // Search & Filter state
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterType, setFilterType] = useState<string>('all');
+  
+  // Modal state
   const [isAddingCar, setIsAddingCar] = useState(false);
   const [editingCar, setEditingCar] = useState<Car | null>(null);
-  const [newCar, setNewCar] = useState<Partial<Car>>({
+  
+  // Images state for the form
+  const [formImages, setFormImages] = useState<CarImage[]>([]);
+  
+  const initialCarState: Partial<Car> = {
     make: '',
     model: '',
     year: new Date().getFullYear(),
@@ -492,15 +230,198 @@ export function AdminCars() {
     status: 'Available',
     type: 'Sedan',
     transmission: 'Automatic',
-    fuelType: 'Gasoline',
+    fuel_type: 'Gasoline',
     color: '',
     vin: '',
     leads: 0,
     images: [],
-    source: activeDatabase // Додано для визначення джерела
-  });
+    source: 'db',
+    description: '',
+    features: [],
+    engine: '',
+    drivetrain: '',
+    doors: 4,
+    seats: 5
+  };
 
-  // Фільтрація автомобілів
+  const [newCar, setNewCar] = useState<Partial<Car>>(initialCarState);
+
+  // Load data from Supabase
+  useEffect(() => {
+    loadCars();
+  }, []);
+
+  const loadCars = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await carApi.fetchAllCars();
+      setCars(data);
+    } catch (err) {
+      console.error('Error loading cars:', err);
+      setError('Failed to load cars from database');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const uploadImages = async (images: CarImage[]): Promise<string[]> => {
+    const supabase = getSupabaseClient();
+    const urls: string[] = [];
+
+    for (const img of images) {
+      if (img.file) {
+        // Upload new file
+        const fileName = `${Date.now()}-${img.file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
+        const { data, error } = await supabase.storage
+          .from('car-images')
+          .upload(fileName, img.file);
+
+        if (error) {
+          console.error('Error uploading image:', error);
+          // If upload fails, we might want to skip or handle error
+          // For now, continue
+          continue;
+        }
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('car-images')
+          .getPublicUrl(fileName);
+          
+        urls.push(publicUrl);
+      } else {
+        // Keep existing URL
+        urls.push(img.url);
+      }
+    }
+    return urls;
+  };
+
+  const handleAddCar = async () => {
+    if (!newCar.make || !newCar.model || !newCar.year || !newCar.price) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      setActionLoading(true);
+      
+      // Upload images first
+      const uploadedUrls = await uploadImages(formImages);
+      
+      const carToCreate = {
+        ...newCar,
+        images: uploadedUrls,
+        source: 'db' as const
+      };
+
+      const createdCar = await carApi.createCar(carToCreate);
+      
+      if (createdCar) {
+        await loadCars();
+        setIsAddingCar(false);
+        setNewCar(initialCarState);
+        setFormImages([]);
+      } else {
+        setError('Failed to create car');
+      }
+    } catch (err) {
+      console.error('Error creating car:', err);
+      setError('An error occurred while creating the car');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleUpdateCar = async () => {
+    if (!editingCar) return;
+
+    try {
+      setActionLoading(true);
+      
+      // Upload images first
+      const uploadedUrls = await uploadImages(formImages);
+      
+      const carToUpdate = {
+        ...editingCar,
+        images: uploadedUrls
+      };
+
+      const updatedCar = await carApi.updateCar(editingCar.id, carToUpdate);
+      
+      if (updatedCar) {
+        await loadCars();
+        setEditingCar(null);
+        setFormImages([]);
+      } else {
+        setError('Failed to update car');
+      }
+    } catch (err) {
+      console.error('Error updating car:', err);
+      setError('An error occurred while updating the car');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteCar = async (carId: string) => {
+    if (!confirm('Are you sure you want to delete this car? This cannot be undone.')) {
+      return;
+    }
+
+    try {
+      setActionLoading(true);
+      const success = await carApi.deleteCar(carId);
+      
+      if (success) {
+        // Optimistic update
+        setCars(cars.filter(c => c.id !== carId));
+      } else {
+        setError('Failed to delete car');
+        await loadCars(); // Revert on failure
+      }
+    } catch (err) {
+      console.error('Error deleting car:', err);
+      setError('An error occurred while deleting the car');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const updateCarStatus = async (carId: string, newStatus: Car['status']) => {
+    try {
+      // Optimistic update
+      setCars(cars.map(c => c.id === carId ? { ...c, status: newStatus } : c));
+      
+      const success = await carApi.updateCarStatus(carId, newStatus);
+      if (!success) {
+        await loadCars(); // Revert if failed
+        setError('Failed to update status');
+      }
+    } catch (err) {
+      console.error('Error updating status:', err);
+      setError('Failed to update status');
+    }
+  };
+
+  const startEditCar = (car: Car) => {
+    setEditingCar(car);
+    // Transform string URLs to CarImage objects
+    const images: CarImage[] = (car.images || []).map((img, index) => ({
+      id: `existing-${index}`,
+      url: carApi.getCarImageUrl(img)
+    }));
+    setFormImages(images);
+  };
+
+  const startAddCar = () => {
+    setNewCar(initialCarState);
+    setFormImages([]);
+    setIsAddingCar(true);
+  };
+
+  // Filter Logic
   const filteredCars = cars.filter(car => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = 
@@ -525,65 +446,6 @@ export function AdminCars() {
     }
   };
 
-  const handleAddCar = () => {
-    if (newCar.make && newCar.model && newCar.year && newCar.price) {
-      const car: Car = {
-        id: Date.now().toString(),
-        make: newCar.make,
-        model: newCar.model,
-        year: newCar.year,
-        price: newCar.price,
-        mileage: newCar.mileage || 0,
-        status: newCar.status || 'Available',
-        type: newCar.type || 'Sedan',
-        transmission: newCar.transmission || 'Automatic',
-        fuelType: newCar.fuelType || 'Gasoline',
-        color: newCar.color,
-        vin: newCar.vin,
-        leads: 0,
-        images: newCar.images || [],
-        source: 'all' // Додано для визначення джерела
-      };
-      setCars([...cars, car]);
-      setIsAddingCar(false);
-      setNewCar({
-        make: '',
-        model: '',
-        year: new Date().getFullYear(),
-        price: 0,
-        mileage: 0,
-        status: 'Available',
-        type: 'Sedan',
-        transmission: 'Automatic',
-        fuelType: 'Gasoline',
-        color: '',
-        vin: '',
-        leads: 0,
-        images: [],
-        source: 'all' // Додано для визначення джерела
-      });
-    }
-  };
-
-  const handleUpdateCar = () => {
-    if (editingCar) {
-      setCars(cars.map(car => car.id === editingCar.id ? editingCar : car));
-      setEditingCar(null);
-    }
-  };
-
-  const handleDeleteCar = (carId: string) => {
-    if (confirm('Are you sure you want to delete this car?')) {
-      setCars(cars.filter(car => car.id !== carId));
-    }
-  };
-
-  const updateCarStatus = (carId: string, newStatus: Car['status']) => {
-    setCars(cars.map(car => 
-      car.id === carId ? { ...car, status: newStatus } : car
-    ));
-  };
-
   const CarFormFields = ({ car, onChange }: { car: Partial<Car>, onChange: (updates: Partial<Car>) => void }) => (
     <div className="space-y-6">
       {/* Images Section */}
@@ -593,8 +455,8 @@ export function AdminCars() {
         </label>
         <DndProvider backend={HTML5Backend}>
           <ImageUpload
-            images={car.images || []}
-            onChange={(images) => onChange({ images })}
+            images={formImages}
+            onChange={setFormImages}
           />
         </DndProvider>
       </div>
@@ -632,7 +494,7 @@ export function AdminCars() {
             value={car.year || new Date().getFullYear()}
             onChange={(e) => onChange({ year: parseInt(e.target.value) })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
-            min="2000"
+            min="1900"
             max={new Date().getFullYear() + 1}
             required
           />
@@ -651,7 +513,7 @@ export function AdminCars() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-2">Mileage</label>
+          <label className="block text-sm font-medium text-gray-600 mb-2">Mileage (km)</label>
           <input
             type="number"
             value={car.mileage || 0}
@@ -673,6 +535,7 @@ export function AdminCars() {
             <option value="Truck">Truck</option>
             <option value="Coupe">Coupe</option>
             <option value="Hatchback">Hatchback</option>
+            <option value="Van">Van</option>
           </select>
         </div>
 
@@ -687,6 +550,7 @@ export function AdminCars() {
             <option value="Sold">Sold</option>
             <option value="Reserved">Reserved</option>
             <option value="Service">Service</option>
+            <option value="Pending">Pending</option>
           </select>
         </div>
 
@@ -728,8 +592,8 @@ export function AdminCars() {
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-2">Fuel Type</label>
           <select
-            value={car.fuelType || 'Gasoline'}
-            onChange={(e) => onChange({ fuelType: e.target.value as Car['fuelType'] })}
+            value={car.fuel_type || 'Gasoline'}
+            onChange={(e) => onChange({ fuel_type: e.target.value as Car['fuel_type'] })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
           >
             <option value="Gasoline">Gasoline</option>
@@ -737,6 +601,59 @@ export function AdminCars() {
             <option value="Electric">Electric</option>
             <option value="Hybrid">Hybrid</option>
           </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">Engine</label>
+          <input
+            type="text"
+            value={car.engine || ''}
+            onChange={(e) => onChange({ engine: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
+            placeholder="2.0L 4-Cylinder"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">Drivetrain</label>
+          <input
+            type="text"
+            value={car.drivetrain || ''}
+            onChange={(e) => onChange({ drivetrain: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
+            placeholder="FWD, AWD, 4x4"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-2">Seats</label>
+          <input
+            type="number"
+            value={car.seats || 5}
+            onChange={(e) => onChange({ seats: parseInt(e.target.value) })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
+            min="2"
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-600 mb-2">Description</label>
+          <textarea
+            value={car.description || ''}
+            onChange={(e) => onChange({ description: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)] h-24"
+            placeholder="Enter detailed description..."
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-600 mb-2">Features (comma separated)</label>
+          <textarea
+            value={Array.isArray(car.features) ? car.features.join(', ') : ''}
+            onChange={(e) => onChange({ features: e.target.value.split(',').map(s => s.trim()).filter(s => s) })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)] h-24"
+            placeholder="Bluetooth, Backup Camera, Heated Seats..."
+          />
         </div>
       </div>
     </div>
@@ -750,27 +667,21 @@ export function AdminCars() {
           <div>
             <h1 className="text-2xl font-bold text-[rgb(5,15,35)]">Cars Management</h1>
             <p className="text-sm text-gray-500 mt-1">
-              Manage your vehicle inventory
-              {syncError && (
-                <span className="ml-2 text-orange-600">⚠️ {syncError}</span>
-              )}
-              {!loading && !syncError && dbCars.length > 0 && (
-                <span className="ml-2 text-green-600">✅ Synced with Supabase</span>
-              )}
+              {cars.length} vehicles in database
+              {loading && <span className="ml-2 text-blue-500">Refreshing...</span>}
             </p>
           </div>
           <div className="flex items-center gap-3">
             <button
-              onClick={loadCarsFromSupabase}
-              disabled={loading}
-              className="flex items-center gap-2 bg-white border-2 border-[rgb(139,130,246)] text-[rgb(139,130,246)] px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors font-semibold disabled:opacity-50"
+              onClick={loadCars}
+              className="p-2 text-gray-500 hover:text-[rgb(139,130,246)] hover:bg-gray-100 rounded-lg transition-colors"
+              title="Refresh Data"
             >
-              <Database className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-              {loading ? 'Syncing...' : 'Sync DB'}
+              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
             </button>
             <button
-              onClick={() => setIsAddingCar(true)}
-              className="flex items-center gap-2 bg-[rgb(139,130,246)] text-white px-6 py-3 rounded-lg hover:bg-[rgb(120,110,230)] transition-colors font-semibold"
+              onClick={startAddCar}
+              className="flex items-center gap-2 bg-[rgb(139,130,246)] text-white px-6 py-3 rounded-lg hover:bg-[rgb(120,110,230)] transition-colors font-semibold shadow-lg shadow-indigo-200"
             >
               <Plus className="w-5 h-5" />
               Add New Car
@@ -780,49 +691,18 @@ export function AdminCars() {
       </div>
 
       <div className="p-6">
-        {/* Database Selector */}
-        <div className="bg-white rounded-xl shadow-sm p-4 mb-4 border border-gray-100">
-          <div className="flex items-center gap-4">
-            <Database className="w-5 h-5 text-gray-500" />
-            <div className="flex gap-2">
-              <button
-                onClick={() => setActiveDatabase('all')}
-                className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                  activeDatabase === 'all'
-                    ? 'bg-[rgb(139,130,246)] text-white shadow-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                All Cars
-                <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-white/20">
-                  {allCars.length}
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveDatabase('db')}
-                className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                  activeDatabase === 'db'
-                    ? 'bg-[rgb(139,130,246)] text-white shadow-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                DB Cars
-                <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-white/20">
-                  {dbCars.length}
-                </span>
-              </button>
-            </div>
-            <div className="ml-auto text-sm text-gray-500">
-              Viewing: <span className="font-semibold text-[rgb(139,130,246)]">
-                {activeDatabase === 'all' ? 'All Cars Database' : 'DB Cars Database'}
-              </span>
-            </div>
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => setError(null)} className="text-red-500 hover:text-red-700">
+              <X className="w-5 h-5" />
+            </button>
           </div>
-        </div>
+        )}
 
         {/* Import / Export Section */}
         <div className="mb-6">
-          <CarImportExport onImportComplete={loadCarsFromSupabase} />
+          <CarImportExport onImportComplete={loadCars} />
         </div>
 
         {/* Filters & Search */}
@@ -834,12 +714,27 @@ export function AdminCars() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search by make, model, year, VIN..."
+                  placeholder="Search by make, model, VIN..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
                 />
               </div>
+            </div>
+
+            {/* Status Filter */}
+            <div>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)] text-gray-600"
+              >
+                <option value="all">All Statuses</option>
+                <option value="Available">Available</option>
+                <option value="Sold">Sold</option>
+                <option value="Reserved">Reserved</option>
+                <option value="Service">Service</option>
+              </select>
             </div>
 
             {/* Type Filter */}
@@ -847,7 +742,7 @@ export function AdminCars() {
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)] text-gray-600"
               >
                 <option value="all">All Types</option>
                 <option value="Sedan">Sedan</option>
@@ -857,210 +752,140 @@ export function AdminCars() {
                 <option value="Hatchback">Hatchback</option>
               </select>
             </div>
-
-            {/* Status Filter */}
-            <div>
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgb(139,130,246)]"
-              >
-                <option value="all">All Statuses</option>
-                <option value="Available">Available</option>
-                <option value="Sold">Sold</option>
-                <option value="Reserved">Reserved</option>
-                <option value="Service">Service</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-gray-100">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-green-600">{cars.filter(c => c.status === 'Available').length}</p>
-              <p className="text-xs text-gray-500 mt-1">Available</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-purple-600">{cars.filter(c => c.status === 'Sold').length}</p>
-              <p className="text-xs text-gray-500 mt-1">Sold</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-yellow-600">{cars.filter(c => c.status === 'Reserved').length}</p>
-              <p className="text-xs text-gray-500 mt-1">Reserved</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-blue-600">{cars.length}</p>
-              <p className="text-xs text-gray-500 mt-1">Total</p>
-            </div>
           </div>
         </div>
 
-        {/* Cars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCars.map((car, idx) => (
-            <div key={`admin-car-${car.id}-${idx}`} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-              {/* Car Image */}
-              <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 relative">
-                {car.images && car.images.length > 0 ? (
-                  <img 
-                    src={car.images[0].url} 
-                    alt={`${car.make} ${car.model}`}
-                    className="w-full h-full object-cover"
-                  />
+        {/* Cars List */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Vehicle</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Mileage</th>
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {loading && cars.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[rgb(139,130,246)]"></div>
+                        <p>Loading inventory...</p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : filteredCars.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                      No cars found matching your criteria.
+                    </td>
+                  </tr>
                 ) : (
-                  <div className="flex items-center justify-center h-full">
-                    <div className="text-center">
-                      <p className="text-4xl font-bold text-gray-400">{car.make.charAt(0)}{car.model.charAt(0)}</p>
-                      <p className="text-sm text-gray-500 mt-2">{car.year}</p>
-                    </div>
-                  </div>
+                  filteredCars.map((car) => (
+                    <tr key={car.id} className="hover:bg-gray-50 transition-colors group">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-4">
+                          <div className="w-16 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 border border-gray-200">
+                            {car.images && car.images.length > 0 && car.images[0] ? (
+                              <img 
+                                src={typeof car.images[0] === 'string' ? car.images[0] : (car.images[0] as any).url} 
+                                alt="" 
+                                className="w-full h-full object-cover" 
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                <ImageIcon className="w-6 h-6" />
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-[rgb(5,15,35)]">{car.year} {car.make} {car.model}</div>
+                            <div className="text-xs text-gray-500">VIN: {car.vin || 'N/A'}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="font-medium text-gray-900">${car.price.toLocaleString()}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(car.status)}`}>
+                          {car.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-gray-600">{car.type}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-gray-600">{car.mileage.toLocaleString()} km</div>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => startEditCar(car)}
+                            className="p-2 text-gray-500 hover:text-[rgb(139,130,246)] hover:bg-gray-100 rounded-lg transition-colors"
+                            title="Edit"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCar(car.id)}
+                            className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
                 )}
-                
-                {/* Image Count Badge */}
-                {car.images && car.images.length > 1 && (
-                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
-                    <ImageIcon className="w-3 h-3" />
-                    {car.images.length}
-                  </div>
-                )}
-              </div>
-
-              {/* Car Details */}
-              <div className="p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h3 className="font-bold text-lg text-[rgb(5,15,35)]">{car.year} {car.make} {car.model}</h3>
-                    <p className="text-sm text-gray-500">{car.type} • {car.color}</p>
-                  </div>
-                  <select
-                    value={car.status}
-                    onChange={(e) => updateCarStatus(car.id, e.target.value as Car['status'])}
-                    className={`px-2 py-1 rounded-full text-xs font-medium border-0 cursor-pointer ${getStatusColor(car.status)}`}
-                  >
-                    <option value="Available">Available</option>
-                    <option value="Sold">Sold</option>
-                    <option value="Reserved">Reserved</option>
-                    <option value="Service">Service</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500 flex items-center gap-2">
-                      <DollarSign className="w-4 h-4" />
-                      Price
-                    </span>
-                    <span className="font-semibold text-[rgb(5,15,35)]">${car.price.toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500 flex items-center gap-2">
-                      <Gauge className="w-4 h-4" />
-                      Mileage
-                    </span>
-                    <span className="font-semibold text-[rgb(5,15,35)]">{car.mileage.toLocaleString()} km</span>
-                  </div>
-                  {car.leads !== undefined && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">Leads</span>
-                      <span className="font-semibold text-purple-600">{car.leads}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setEditingCar(car)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[rgb(139,130,246)] text-white rounded-lg hover:bg-[rgb(120,110,230)] transition-colors text-sm font-medium"
-                  >
-                    <Edit className="w-4 h-4" />
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCar(car.id)}
-                    className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredCars.length === 0 && (
-          <div className="text-center py-12 bg-white rounded-xl border border-gray-100">
-            <p className="text-gray-500">No cars found matching your criteria</p>
+              </tbody>
+            </table>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Add Car Modal */}
-      {isAddingCar && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto" onClick={() => setIsAddingCar(false)}>
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full my-8" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white rounded-t-xl">
-              <h2 className="text-2xl font-bold text-[rgb(5,15,35)]">Add New Car</h2>
-              <button onClick={() => setIsAddingCar(false)} className="text-gray-400 hover:text-gray-600">
+      {/* Edit/Add Modal */}
+      {(isAddingCar || editingCar) && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={() => { setIsAddingCar(false); setEditingCar(null); }}>
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
+              <h2 className="text-2xl font-bold text-[rgb(5,15,35)]">
+                {isAddingCar ? 'Add New Car' : 'Edit Car'}
+              </h2>
+              <button onClick={() => { setIsAddingCar(false); setEditingCar(null); }} className="text-gray-400 hover:text-gray-600">
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="p-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+            <div className="p-6">
               <CarFormFields 
-                car={newCar} 
-                onChange={(updates) => setNewCar({ ...newCar, ...updates })} 
+                car={isAddingCar ? newCar : (editingCar || {})} 
+                onChange={(updates) => isAddingCar ? setNewCar({...newCar, ...updates}) : setEditingCar(editingCar ? {...editingCar, ...updates} : null)} 
               />
-
-              <div className="flex gap-3 mt-6 pt-6 border-t border-gray-200 sticky bottom-0 bg-white">
-                <button
-                  onClick={() => setIsAddingCar(false)}
-                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleAddCar}
-                  className="flex-1 px-6 py-3 bg-[rgb(139,130,246)] text-white rounded-lg hover:bg-[rgb(120,110,230)] transition-colors font-semibold"
-                >
-                  Add Car
-                </button>
-              </div>
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Edit Car Modal */}
-      {editingCar && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto" onClick={() => setEditingCar(null)}>
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full my-8" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white rounded-t-xl">
-              <h2 className="text-2xl font-bold text-[rgb(5,15,35)]">Edit Car</h2>
-              <button onClick={() => setEditingCar(null)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-6 h-6" />
+            <div className="p-6 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 sticky bottom-0">
+              <button 
+                onClick={() => { setIsAddingCar(false); setEditingCar(null); }}
+                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-100 transition-colors"
+                disabled={actionLoading}
+              >
+                Cancel
               </button>
-            </div>
-
-            <div className="p-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-              <CarFormFields 
-                car={editingCar} 
-                onChange={(updates) => setEditingCar({ ...editingCar, ...updates })} 
-              />
-
-              <div className="flex gap-3 mt-6 pt-6 border-t border-gray-200 sticky bottom-0 bg-white">
-                <button
-                  onClick={() => setEditingCar(null)}
-                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUpdateCar}
-                  className="flex-1 px-6 py-3 bg-[rgb(139,130,246)] text-white rounded-lg hover:bg-[rgb(120,110,230)] transition-colors font-semibold"
-                >
-                  Update Car
-                </button>
-              </div>
+              <button
+                onClick={isAddingCar ? handleAddCar : handleUpdateCar}
+                className="px-6 py-2 bg-[rgb(139,130,246)] text-white rounded-lg font-bold hover:bg-[rgb(120,110,230)] transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={actionLoading}
+              >
+                {actionLoading && <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>}
+                {isAddingCar ? 'Create Car' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>
