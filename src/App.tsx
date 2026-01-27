@@ -532,7 +532,7 @@ export default function App() {
 
               {/* Trade-in Card */}
               <div 
-                onClick={() => navigateTo('quiz')}
+                onClick={() => navigateTo('sell')}
                 className="rounded-[0.9375rem] p-8 hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between min-h-[280px] border border-[rgba(139,_130,_246,_0.06)]"
                 style={{"backgroundImage":"linear-gradient(45deg, rgba(139, 130, 246, 0.05), rgba(139, 130, 246, 0.1))"}}
               >
@@ -542,8 +542,16 @@ export default function App() {
                 </div>
 
                 <div className="mt-8 flex items-center gap-2">
-                  <div className="font-bold text-[18px] text-[rgb(139,_130,_246)]">Get Started</div>
-                  <Icons.ArrowRight className="w-5 h-5 text-[rgb(139,_130,_246)]" />
+                  <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateTo('sell');
+                    }}
+                    className="bg-[rgb(139,_130,_246)] text-white px-6 py-3 rounded-full font-bold text-[16px] hover:bg-[rgb(124,_116,_220)] transition-colors cursor-pointer flex items-center gap-2"
+                  >
+                    Get Started
+                    <Icons.ArrowRight className="w-5 h-5 text-white" />
+                  </div>
                 </div>
               </div>
             </div>

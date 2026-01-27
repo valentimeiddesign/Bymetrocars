@@ -301,6 +301,9 @@
     letter-spacing: inherit;
     color: inherit;
     opacity: 1;
+    --lightningcss-light: initial;
+    --lightningcss-dark: ;
+    color-scheme: light;
     background-color: #0000;
     border-radius: 0;
   }
@@ -312,6 +315,9 @@
     letter-spacing: inherit;
     color: inherit;
     opacity: 1;
+    --lightningcss-light: initial;
+    --lightningcss-dark: ;
+    color-scheme: light;
     background-color: #0000;
     border-radius: 0;
   }
@@ -2769,6 +2775,12 @@
   @media (hover: hover) {
     .hover\:bg-\[rgb\(120\,_110\,_230\)\]:hover {
       background-color: #786ee6;
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:bg-\[rgb\(124\,_116\,_220\)\]:hover {
+      background-color: #7c74dc;
     }
   }
 
