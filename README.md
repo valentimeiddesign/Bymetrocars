@@ -1,7 +1,7 @@
 
-  # BuyMetro Cars
+  # BuyMetroCars
 
-  This is a code bundle for BuyMetro Cars. The original project is available at https://www.figma.com/design/o5wZ3MzrBclpgIrJ3eONS9/BuyMetro-Cars.
+  This is a code bundle for BuyMetroCars. The original project is available at https://www.figma.com/design/o5wZ3MzrBclpgIrJ3eONS9/BuyMetroCars.
 
   ## Running the code
 
