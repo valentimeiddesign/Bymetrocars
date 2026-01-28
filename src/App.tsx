@@ -12,6 +12,7 @@ import { ReturnPolicy } from "./components/ReturnPolicy";
 import { AdminLogin } from "./components/AdminLogin";
 import { AdminPanel } from "./components/AdminPanel";
 import { CarDetails } from "./components/CarDetails";
+import { ApiDataDemo } from "./components/ApiDataDemo";
 import {
   Icons,
   CarImages,
@@ -93,6 +94,8 @@ export default function App() {
       setCurrentPage("quiz");
     } else if (cleanPath === "/policy") {
       setCurrentPage("policy");
+    } else if (cleanPath === "/api/cars") {
+      setCurrentPage("api/cars");
     } else {
       // Fallback to query params
       const page = params.get("page");
@@ -558,6 +561,16 @@ export default function App() {
           <ReturnPolicy onNavigate={navigateTo} />
           <Footer onNavigate={navigateTo} />
         </div>
+      </div>
+    );
+  }
+
+  // Render API Data Demo page
+  if (currentPage === "api/cars") {
+    return (
+      <div className="min-h-screen w-full bg-white">
+        <AnalyticsScripts />
+        <ApiDataDemo />
       </div>
     );
   }

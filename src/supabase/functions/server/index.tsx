@@ -2,6 +2,8 @@ import { Hono } from "npm:hono";
 import { cors } from "npm:hono/cors";
 import { logger } from "npm:hono/logger";
 import * as kv from "./kv_store.tsx";
+import { createClient } from "npm:@supabase/supabase-js@2";
+
 const app = new Hono();
 
 // Enable logger
@@ -19,9 +21,160 @@ app.use(
   }),
 );
 
+// Custom Middleware Examples
+// Authentication middleware
+const authMiddleware = async (c: any, next: any) => {
+  const authHeader = c.req.header('Authorization');
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return c.json({ error: 'Unauthorized - Missing or invalid token' }, 401);
+  }
+  
+  // You can add token validation here
+  const token = authHeader.split(' ')[1];
+  
+  // Store user info in context for use in route handlers
+  c.set('userId', token);
+  
+  await next();
+};
+
+// Logging middleware for specific routes
+const requestLogger = async (c: any, next: any) => {
+  const start = Date.now();
+  await next();
+  const end = Date.now();
+  console.log(`${c.req.method} ${c.req.url} - ${end - start}ms`);
+};
+
+// Rate limiting middleware (simple example)
+const rateLimiter = async (c: any, next: any) => {
+  const ip = c.req.header('x-forwarded-for') || 'unknown';
+  const key = `ratelimit:${ip}`;
+  
+  const requests = await kv.get(key) || 0;
+  
+  if (requests > 100) {
+    return c.json({ error: 'Too many requests' }, 429);
+  }
+  
+  await kv.set(key, requests + 1);
+  await next();
+};
+
 // Health check endpoint
 app.get("/make-server-baa3db23/health", (c) => {
   return c.json({ status: "ok" });
+});
+
+// Example: Public route (no middleware)
+app.get("/make-server-baa3db23/public/info", (c) => {
+  return c.json({ message: "This is a public endpoint" });
+});
+
+// Public route to get all data from Supabase table "data"
+app.get("/make-server-baa3db23/public/data", async (c) => {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    const { data, error } = await supabase
+      .from('data')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching data from Supabase table "data":', error);
+      return c.json({ error: 'Failed to fetch data', details: error.message }, 500);
+    }
+
+    return c.json({ 
+      success: true, 
+      count: data?.length || 0,
+      data: data || [] 
+    });
+  } catch (error) {
+    console.error('Error in /public/data endpoint:', error);
+    return c.json({ error: 'Internal server error', details: String(error) }, 500);
+  }
+});
+
+// API route to get all cars data from Supabase table "data"
+app.get("/make-server-baa3db23/api/cars", async (c) => {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    const { data: carsData, error } = await supabase
+      .from('data')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching cars from Supabase table "data":', error);
+      return c.json({ 
+        error: 'Failed to fetch cars data', 
+        details: error.message 
+      }, 500);
+    }
+
+    // Return pure JSON array format
+    return c.json(carsData || []);
+  } catch (error) {
+    console.error('Error in /api/cars endpoint:', error);
+    return c.json({ 
+      error: 'Internal server error', 
+      details: String(error) 
+    }, 500);
+  }
+});
+
+// API route to get all data from Supabase table "data"
+app.get("/make-server-baa3db23/api/data", async (c) => {
+  try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    );
+
+    const { data: allData, error } = await supabase
+      .from('data')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching data from Supabase table "data":', error);
+      return c.json({ 
+        error: 'Failed to fetch data', 
+        details: error.message 
+      }, 500);
+    }
+
+    // Return pure JSON array format
+    return c.json(allData || []);
+  } catch (error) {
+    console.error('Error in /api/data endpoint:', error);
+    return c.json({ 
+      error: 'Internal server error', 
+      details: String(error) 
+    }, 500);
+  }
+});
+
+// Example: Protected route with auth middleware
+app.get("/make-server-baa3db23/protected/data", authMiddleware, async (c) => {
+  const userId = c.get('userId');
+  return c.json({ message: "Protected data", userId });
+});
+
+// Example: Route with multiple middleware
+app.post("/make-server-baa3db23/api/action", requestLogger, authMiddleware, async (c) => {
+  const body = await c.req.json();
+  return c.json({ success: true, data: body });
 });
 
 // Leads Endpoints

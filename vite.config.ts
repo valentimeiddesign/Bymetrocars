@@ -29,6 +29,7 @@
         'figma:asset/4b62f68fb822a2364522d1cdabaf969ad53d4d90.png': path.resolve(__dirname, './src/assets/4b62f68fb822a2364522d1cdabaf969ad53d4d90.png'),
         'figma:asset/42cab77d70c9ce4384e58dbdbc3596e2fd093453.png': path.resolve(__dirname, './src/assets/42cab77d70c9ce4384e58dbdbc3596e2fd093453.png'),
         'figma:asset/2ea45d7e04c9c673edc6dca4e39cb88fd82bef8f.png': path.resolve(__dirname, './src/assets/2ea45d7e04c9c673edc6dca4e39cb88fd82bef8f.png'),
+        '@supabase/supabase-js@2': '@supabase/supabase-js',
         '@jsr/supabase__supabase-js@2.49.8': '@jsr/supabase__supabase-js',
         '@': path.resolve(__dirname, './src'),
       },

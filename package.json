@@ -5,7 +5,7 @@
       "private": true,
       "dependencies": {
           "@jsr/supabase__supabase-js": "^2.49.8",
-          "@supabase/supabase-js": "*",
+          "@supabase/supabase-js": "^2",
           "hono": "*",
           "lucide-react": "*",
           "react": "^18.3.1",
